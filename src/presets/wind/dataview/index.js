@@ -6,7 +6,7 @@ export default {
 
             // Shape
             'border-0',
-
+            'rounded-lg',
             // Color
             'text-surface-700 dark:text-white/80',
             'bg-surface-0 dark:bg-surface-800'

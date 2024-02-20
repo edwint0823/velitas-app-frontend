@@ -3,7 +3,7 @@ export default {
         class: [
             //Shape
             'rounded-lg',
-            'shadow-md',
+            'shadow-lg',
 
             //Color
             'bg-transparent dark:bg-transparent',
@@ -11,7 +11,8 @@ export default {
         ]
     },
     header: {
-        class: ['border-b border-surface-200 dark:border-surface-700']
+        // class: ['border-b border-surface-200 dark:border-surface-700']
+        class: ['m-2']
     },
     body: {
         class: 'py-5'
