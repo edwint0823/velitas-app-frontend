@@ -18,6 +18,12 @@ export default [
                 name: "list_orders",
                 component: () => import( "../views/orders/list_order.vue"),
                 meta: {title: 'Listar Pedidos'}
+            },
+            {
+                path: '/view-order-by-code/:code',
+                name: "view_order_by_code",
+                component: () => import( "../views/orders/view_order_by_code.vue"),
+                meta: {title: 'Ver pedido'}
             }
         ]
     }
