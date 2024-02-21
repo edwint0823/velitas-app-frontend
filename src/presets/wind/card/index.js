@@ -15,7 +15,7 @@ export default {
         class: ['m-2']
     },
     body: {
-        class: 'py-5'
+        class: ''
     },
     title: {
         class: 'text-lg font-medium mb-2 px-5 md:px-6'
@@ -30,7 +30,7 @@ export default {
         ]
     },
     content: {
-        class: 'py-6 px-5 md:px-6'
+        class: 'py-2 lg:py-6 xl:py-6 2xl:py-6 px-2 lg:px-5 xl:px-6 2xl:px-6'
     },
     footer: {
         class: ['px-5 md:px-6 pt-5 pb-0', 'border-t border-surface-200 dark:border-surface-700']

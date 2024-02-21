@@ -3,34 +3,33 @@
     <Card class="mb-5">
       <template #title> Información del Cliente</template>
       <template #content>
-        <div class="grid grid-cols-3">
+        <div class="grid grid-cols-1 gap-x-16 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
           <div class="flex flex-col gap-2">
             <label for="customer_email">Correo Electrónico: </label>
-            <div class="flex w-full">
-              <InputText id="customer_email" v-model="customer_email" type="text" class="w-[55%]"
+            <div class="flex items-center gap-2 w-full">
+              <InputText id="customer_email" v-model="customer_email" type="text" class="w-full"
                          :disabled="disableFields"/>
-              <Button :icon="`pi pi-${!disableFields ? 'search' : 'pencil'}`" rounded text raised
+              <Button :icon="`pi pi-${!disableFields ? 'search' : 'pencil'}`" raised
                       @click="searchClient"/>
             </div>
-
-            <small class="text-red-600">{{ errors.customer_email || '&nbsp;' }}</small>
+            <small class="text-red-600" :class="{'hidden': !errors.customer_email}">{{ errors.customer_email }}</small>
           </div>
           <div class="flex flex-col gap-2" v-if="showClientExtraInfo">
             <label for="customer_name">Nombre:</label>
             <InputText id="customer_name" v-model="customer_name" type="text"
-                       class="w-1/2" :disabled="disableFields"
+                       class="w-full" :disabled="disableFields"
             />
-            <small class="text-red-600">{{ errors.customer_name || '&nbsp;' }}</small>
+            <small class="text-red-600" :class="{'hidden': !errors.customer_name}">{{ errors.customer_name }}</small>
           </div>
           <div class="flex flex-col gap-2" v-if="showClientExtraInfo">
             <label for="customer_tel">Num. Telefónico:</label>
             <InputMask id="customer_tel" v-model="customer_tel" mask="999 999 9999" placeholder="999 999 9999"
-                       class="w-1/2" :disabled="disableFields"
+                       class="w-full" :disabled="disableFields"
             />
-            <small class="text-red-600">{{ errors.customer_tel || '&nbsp;' }}</small>
+            <small class="text-red-600" :class="{'hidden': !errors.customer_tel}">{{ errors.customer_tel }}</small>
           </div>
         </div>
-        <div class="flex justify-end">
+        <div class="flex justify-end mt-3">
           <Button type="button" label="Guardar" @click="saveClientData" v-show="showSubmitButton"/>
         </div>
       </template>

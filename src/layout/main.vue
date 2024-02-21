@@ -4,7 +4,7 @@
     <MobileMenu/>
     <main class="p-2 flex-grow" style="min-height: 100vh">
       <Breadcrumbs/>
-      <div class="bg-white/80 shadow-blur rounded-2xl p-5">
+      <div class="bg-white/80 shadow-blur rounded-2xl p-0 lg:p-3 xl:p-5 2xl:p-5">
         <router-view/>
       </div>
     </main>

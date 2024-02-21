@@ -1,22 +1,28 @@
 <template>
-  <span class="flex justify-center font-bold text-3xl">Información del pedido Nro {{ route.params.code }}</span>
-  <Card class="mb-5">
-    <template #header><span class="text-2xl font-semibold">Información general</span></template>
+  <span class="flex justify-center text-center font-bold text-2xl lg:text-3xl xl:text-3xl 2xl:text-3xl p-2">
+    Información del pedido Nro {{ route.params.code }}
+  </span>
+  <Card class="my-5">
+    <template #header>
+      <span class="text-xl lg:text-2xl xl:text-2xl 2xl:text-2xl font-semibold">
+        Información general
+      </span>
+    </template>
     <template #content>
-      <div class="grid grid-cols-4 m-2">
-        <div class="flex flex-col gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 px-2">
+        <div class="flex flex-col">
           <span class="font-semibold">Cliente</span>
           <span>{{ orderInfo.customerName }}</span>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col">
           <span class="font-semibold">Valor Total</span>
           <span>{{ $h.formatCurrency(orderInfo.totalPrice) }}</span>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col">
           <span class="font-semibold">Fecha estimada de entrega</span>
           <span>{{ $dayjs(orderInfo.deliveryDate).format('MMMM DD [de] YYYY') }}</span>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col">
           <span class="font-semibold">Estado</span>
           <span
               class="font-bold"
@@ -30,7 +36,7 @@
       <!--      </div>-->
     </template>
   </Card>
-  <span class="text-2xl font-semibold">Detalles del pedido</span>
+  <span class="font-semibold text-2xl lg:text-3xl xl:text-3xl 2xl:text-3xl px-2">Detalles del pedido</span>
   <DataView :value="orderInfo.orderDetails" layout="list" class="my-5">
     <template #empty>
       <div class="flex justify-center">
@@ -38,18 +44,21 @@
       </div>
     </template>
     <template #list="slotProps">
-      <div class="py-5">
+      <div class="my-5">
         <div v-for="(candle, index) in slotProps.items" :key="index"
-             class="grid grid-cols-10 mx-5 py-2 gap-7 border-slate-300 dark:border-slate-500"
+             class="grid grid-cols-1 lg:grid-cols-10 mx-5 py-2 gap-7 border-slate-300 dark:border-slate-500"
              :class="{'border-b' : index < slotProps.items.length -1}"
         >
-          <div class="col-span-2 flex flex-col justify-center items-center">
-            <img :src="candle.candleOptionUrlImage" :alt="candle.candleOptionName">
+          <div class=" col-span-1 lg:col-span-2 flex flex-col justify-center items-center">
+            <span class="text-sm mb-2 dark:text-white/70 text-surface-500">Tipo de vela</span>
+            <img :src="candle.candleOptionUrlImage" :alt="candle.candleOptionName" class="w-[250px] h-[70px]">
             <span>{{ candle.candleOptionName }}</span>
           </div>
-          <div class="col-span-7 flex flex-col">
+          <div class="col-span-1 lg:col-span-7 flex flex-col">
             <span class="text-sm mb-5 dark:text-white/70 text-surface-500">Nombres</span>
-            <div class="grid grid-cols-5 gap-2">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-2"
+            >
               <div v-for="(candleName, index2) in candle.nameList" :key="index2">
                 <div
                     class="flex flex-col bg-surface-200 dark:bg-surface-900 dark:text-surface-0/80 text-surface-700 rounded-lg p-2"
@@ -86,7 +95,8 @@
       </div>
     </template>
   </DataView>
-  <div class="flex justify-center" v-if="statusNameValidToCancel.includes(orderInfo.statusName.toLocaleLowerCase())">
+  <div class="flex justify-center pb-5"
+       v-if="statusNameValidToCancel.includes(orderInfo.statusName.toLocaleLowerCase())">
     <Button severity="danger" icon="pi pi-times" label="Cancelar pedido" @click="cancelOrder"/>
   </div>
 </template>

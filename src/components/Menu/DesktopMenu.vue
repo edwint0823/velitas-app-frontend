@@ -13,7 +13,7 @@
            style="border-radius: 2rem">
           <span :class="[item.icon, item.iconColor ]"/>
           <span class="ml-2 flex-1">{{ item.label }}</span>
-          <span class="pi pi-arrow-right "/>
+          <span class="pi pi-chevron-right text-sm"/>
         </a>
         <router-link v-else v-slot="{ href, navigate }" :to="{name: item.route}" custom>
           <a :href="href" @click="navigate"
@@ -23,12 +23,26 @@
           </a>
         </router-link>
       </template>
+      <template #end>
+        <div class="flex items-end justify-start h-full">
+          <div class="w-full mx-2">
+            <Avatar shape="circle">
+              <template #icon>
+                <i :class="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'"
+                   class="text-slate-950 dark:text-slate-50"></i>
+              </template>
+            </Avatar>
+            <span class="text-slate-950 dark:text-slate-50">{{ isLoggedIn ? 'Salir' : "Iniciar sesión" }}</span>
+          </div>
+        </div>
+      </template>
     </MegaMenu>
   </aside>
 </template>
 <script setup>
 
 import {computed, ref} from "vue";
+import {menuItems} from "@/core/constants.js";
 
 const isLoggedIn = computed(() => {
   // Todo: agregar storage para usuario loguedo
@@ -36,97 +50,6 @@ const isLoggedIn = computed(() => {
 })
 
 
-const items = ref([
-  {
-    label: 'Dashboard',
-    icon: 'pi pi-home',
-    iconColor: '',
-    root: false,
-    route: 'dashboard'
-  },
-  {
-    label: 'Pedidos',
-    icon: 'pi pi-box',
-    iconColor: '',
-    root: true,
-    items: [
-      [
-        {
-          label: 'Pedidos',
-          items: [
-            {
-              label: 'Listar',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'list_orders'
-            },
-            {
-              label: 'Crear',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'create_order'
-            }
-          ]
-        }
-
-      ]
-    ]
-  },
-  {
-    label: 'Clientes',
-    icon: 'pi pi-briefcase',
-    iconColor: '',
-    root: true,
-    items: [
-      [
-        {
-          label: 'Clientes',
-          items: [
-            {
-              label: 'Listar',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'list_orders'
-            },
-            {
-              label: 'Crear',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'create_order'
-            }
-          ]
-        }
-
-      ]
-    ]
-  },
-  {
-    label: 'Usuarios',
-    icon: 'pi pi-box',
-    iconColor: '',
-    root: true,
-    items: [
-      [
-        {
-          label: 'Usuarios',
-          items: [
-            {
-              label: 'Listar',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'list_orders'
-            },
-            {
-              label: 'Crear',
-              icon: 'pi pi-box',
-              iconColor: '',
-              route: 'create_order'
-            }
-          ]
-        }
-      ]
-    ]
-  }
-])
+const items = ref(menuItems)
 
 </script>
