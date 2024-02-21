@@ -1,16 +1,51 @@
 <template>
   <div>
-    <MegaMenu :model="isLoggedIn ? items: []" class="w-full"/>
+    <MegaMenu :model="isLoggedIn ? items: []" class="w-full">
+      <template #start v-if="!isLoggedIn">
+        <div class="flex items-center justify-start">
+          <img src="../../../public/images/logo_app.png" alt="" class="w-1/6"/>
+          <span class="font-semibold dark:text-white text-surface-900">VELITAS APP</span>
+        </div>
+      </template>
+      <template #menubuttonicon>
+        <img src="../../../public/images/logo_app.png" alt="" class="w-full"/>
+      </template>
+      <template #item="{item}">
+        <a v-if="item.root"
+           class="flex align-items-center cursor-pointer px-3 py-2 overflow-hidden relative items-center"
+           style="border-radius: 2rem">
+          <span :class="[item.icon, item.iconColor ]"/>
+          <span class="ml-2 flex-1">{{ item.label }}</span>
+          <span class="pi pi-chevron-down text-sm"/>
+        </a>
+        <router-link v-else v-slot="{ href, navigate }" :to="{name: item.route}" custom>
+          <a :href="href" @click="navigate"
+             class="flex align-items-center cursor-pointer px-3 py-2 overflow-hidden relative items-center">
+            <span :class="[item.icon, item.iconColor ]"/>
+            <span class="ml-2">{{ item.label }}</span>
+          </a>
+        </router-link>
+      </template>
+      <template #end>
+        <Avatar shape="circle">
+          <template #icon>
+            <i :class="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'"
+               class="text-slate-950 dark:text-slate-50"></i>
+          </template>
+        </Avatar>
+      </template>
+    </MegaMenu>
   </div>
 </template>
 <script setup>
 import {computed, ref} from "vue";
+import {menuItems} from "@/core/constants.js";
 
 const isLoggedIn = computed(() => {
   // Todo: agregar storage para usuario loguedo
   return true
 })
-const items = ref([])
+const items = ref(menuItems)
 </script>
 
 <style scoped>
