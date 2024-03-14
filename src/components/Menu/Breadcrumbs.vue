@@ -40,6 +40,7 @@
 import { computed, ref } from "vue";
 import { useMainStore } from "@/store/main.store.js";
 import { helper } from "@/utils/helper.js";
+import { useAuthStore } from "@/store/auth/auth.store.js";
 
 const home = ref({
   icon: "pi pi-home",
@@ -47,10 +48,11 @@ const home = ref({
 });
 const mainStore = useMainStore();
 
+const authStore = useAuthStore();
 const isLoggedIn = computed(() => {
-  // Todo: agregar storage para usuario loguedo
-  return false;
+  return authStore.isLoggedIn;
 });
+
 const isMobile = computed(() => {
   return helper.isMobileDevice();
 });

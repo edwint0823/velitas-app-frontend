@@ -1,4 +1,5 @@
 <template>
+  <Loading />
   <div class="min-w-screen flex min-h-screen items-center justify-center">
     <div class="min-w-screen grid min-h-screen grid-cols-1 lg:grid-cols-2">
       <div class="flex justify-center bg-sky-400 p-16" v-if="!isMobile">
@@ -16,15 +17,21 @@
               <span class="text-3xl font-bold">Iniciar Sesión</span>
             </div>
             <div class="my-7 flex flex-col gap-2">
-              <label class="text-lg font-semibold">Correo electrónico</label>
-              <InputText type="email" placeholder="ejemplo@ejemplo.com" size="large" v-model="email" />
-              <small class="font-bold text-red-600" :class="{ hidden: !errors.email }">
-                {{ errors.email }}
+              <label class="text-lg font-semibold">Usuario</label>
+              <InputText type="text" placeholder="usuario" size="large" v-model="user_name" @keyup.enter="logIn" />
+              <small class="font-bold text-red-600" :class="{ hidden: !errors.user_name }">
+                {{ errors.user_name }}
               </small>
             </div>
             <div class="flex flex-col gap-2">
               <label class="text-lg font-semibold">Contraseña</label>
-              <InputText type="password" placeholder="Contraseña" size="large" v-model="password" />
+              <InputText
+                type="password"
+                placeholder="Contraseña"
+                size="large"
+                v-model="password"
+                @keyup.enter="logIn"
+              />
               <small class="font-bold text-red-600" :class="{ hidden: !errors.password }">
                 {{ errors.password }}
               </small>
@@ -39,28 +46,39 @@
   </div>
 </template>
 <script setup>
+import Loading from "@/components/general/Loading.vue";
 import * as yup from "yup";
 import { computed } from "vue";
 import { helper } from "@/utils/helper.js";
 import { useForm } from "vee-validate";
 import { loginMessages } from "@/core/constants.js";
+import { Login } from "@/services/auth/auth.service.js";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/store/auth/auth.store.js";
 
 const isMobile = computed(() => {
   return helper.isMobileDevice();
 });
+const router = useRouter();
+const authStore = useAuthStore();
 
 const schema = yup.object({
-  email: yup.string().default("").email(loginMessages.validEmail).required(loginMessages.requiredEmail),
-  password: yup.string().default("").min(6, loginMessages.minLengthPassword).required(loginMessages.requiredPassword),
+  user_name: yup.string().default("").required(loginMessages.requiredUserName),
+  password: yup.string().default("").min(4, loginMessages.minLengthPassword).required(loginMessages.requiredPassword),
 });
 const { errors, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
 });
 
-const [email] = defineField("email");
+const [user_name] = defineField("user_name");
 const [password] = defineField("password");
 
-const logIn = handleSubmit((values) => {
-  console.log(values);
+const logIn = handleSubmit(async (values) => {
+  await Login(values).then(({ data }) => {
+    authStore.setToken(data.token);
+    authStore.setUserInfo(data.user);
+    router.push({ name: "dashboard" });
+    console.log("login successful", data);
+  });
 });
 </script>

@@ -34,7 +34,11 @@
       <template #end>
         <Avatar shape="circle">
           <template #icon>
-            <i :class="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'" class="text-slate-950 dark:text-slate-50"></i>
+            <i
+              :class="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'"
+              class="text-slate-950 dark:text-slate-50"
+              @click="loginOrLogout"
+            ></i>
           </template>
         </Avatar>
       </template>
@@ -44,12 +48,23 @@
 <script setup>
 import { computed, ref } from "vue";
 import { menuItems } from "@/core/constants.js";
+import { useAuthStore } from "@/store/auth/auth.store.js";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const authStore = useAuthStore();
 const isLoggedIn = computed(() => {
-  // Todo: agregar storage para usuario loguedo
-  return true;
+  return authStore.isLoggedIn;
 });
+
 const items = ref(menuItems);
+
+const loginOrLogout = () => {
+  if (isLoggedIn.value) {
+    authStore.logout();
+  }
+  router.push({ name: "login" });
+};
 </script>
 
 <style scoped></style>

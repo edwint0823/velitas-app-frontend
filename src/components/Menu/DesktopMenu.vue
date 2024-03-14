@@ -2,7 +2,7 @@
   <aside v-if="isLoggedIn">
     <MegaMenu :model="isLoggedIn ? items : []" orientation="vertical">
       <template #start>
-        <div class="mb-5 flex flex-col items-center">
+        <div class="mb-5 mt-4 flex flex-col items-center">
           <img src="/images/logos/logo_app.png" alt="" class="w-1/2" />
           <span class="font-semibold text-surface-900 dark:text-white">VELITAS APP</span>
         </div>
@@ -30,7 +30,7 @@
       </template>
       <template #end>
         <div class="flex h-full items-end justify-start">
-          <div class="mx-2 w-full">
+          <div class="mx-2 w-full cursor-pointer" @click="logout">
             <Avatar shape="circle">
               <template #icon>
                 <i
@@ -49,11 +49,20 @@
 <script setup>
 import { computed, ref } from "vue";
 import { menuItems } from "@/core/constants.js";
+import { useAuthStore } from "@/store/auth/auth.store.js";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const isLoggedIn = computed(() => {
-  // Todo: agregar storage para usuario loguedo
-  return false;
+  return authStore.isLoggedIn;
 });
 
 const items = ref(menuItems);
+
+const logout = () => {
+  authStore.logout();
+  router.push({ name: "login" });
+};
 </script>
