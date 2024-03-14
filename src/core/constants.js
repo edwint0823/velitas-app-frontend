@@ -185,6 +185,9 @@ export const breadCrumbsLabels = {
     createOrder: "Crear Pedido",
     searchOrderByCode: "Ver pedido",
   },
+  dashboard: {
+    main: "dashboard",
+  },
 };
 
 export const createOrderValidation = {
@@ -206,8 +209,17 @@ export const createDetailOrderMessages = {
 };
 
 export const loginMessages = {
-  validEmail: "Debe ser un email valido",
-  requiredEmail: "El correo electrónico es requerido",
+  requiredUserName: "El nombre de usuario es requerido",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
   requiredPassword: "La contraseña es requerida",
+};
+
+export const errorMessages = {
+  validationFieldsError: "Error de validación de campos",
+  notAuthorizedError: "No Autorizado",
+  expiredSessionError: "La sesión ha expirado",
+  notFoundError: "No encontrado",
+  accessDeniedError: "Acceso denegado",
+  accessDeniedDetailError: "No tiene permisos para realizar esta acción",
+  internalServerError: "Error interno del servidor",
 };
