@@ -214,6 +214,16 @@ export const loginMessages = {
   requiredPassword: "La contraseña es requerida",
 };
 
+export const registerMessages = {
+  requiredFirstName: "Los nombres son requeridos",
+  requiredLastName: "Los apellidos son requeridos",
+  userNameRequired: "El nombre de usuario es requerido",
+  requiredEmail: "El correo electrónico es requerido",
+  validEmail: "Correo electrónico invalido",
+  requiredPassword: "La contraseña es requerida",
+  minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
+};
+
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",
@@ -222,4 +232,8 @@ export const errorMessages = {
   accessDeniedError: "Acceso denegado",
   accessDeniedDetailError: "No tiene permisos para realizar esta acción",
   internalServerError: "Error interno del servidor",
+};
+
+export const successMessages = {
+  userRegistered: "Usuario registrado con éxito",
 };

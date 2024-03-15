@@ -15,14 +15,25 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error("Error petición", error);
     document.getElementById("loading-component").classList.add("hidden");
     const { status } = error.response;
     if (status === HttpStatus.BAD_REQUEST) {
+      let errorList = [];
+      if (error.response.data.hasOwnProperty("detail")) {
+        errorList = response.data.detail;
+      } else {
+        for (let key in error.response.data) {
+          if (Array.isArray(error.response.data[key])) {
+            errorList.push(`${key}: ${error.response.data[key].join(", ")}`);
+          } else {
+            errorList.push(`${key}: ${error.response.data[key]}`);
+          }
+        }
+      }
       Swal.fire({
         icon: "warning",
         title: errorMessages.validationFieldsError,
-        text: `${error.response.data.detail.join("\n")}`,
+        text: `${errorList.join("\n")}`,
       });
     } else if (status === HttpStatus.UNAUTHORIZED) {
       Swal.fire({
