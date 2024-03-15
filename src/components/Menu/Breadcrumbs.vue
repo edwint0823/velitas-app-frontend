@@ -1,53 +1,62 @@
 <template>
   <header class="mb-4 flex">
-    <Breadcrumb :home="home" :model="breadcrumb_items"
-                class="w-full p-5 text-dark bg-surface-200 dark:text-white dark:bg-surface-900 rounded-lg">
+    <Breadcrumb
+      :home="home"
+      :model="breadcrumb_items"
+      class="text-dark w-full rounded-lg bg-surface-200 p-5 dark:bg-surface-900 dark:text-white"
+    >
       <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="{name: item.route}" custom>
+        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="{ name: item.route }" custom>
           <a :href="href" @click="navigate">
-            <span :class="[item.icon, 'text-color']"/>
-            <span class="text-primary font-semibold text-sm lg:text-base xl:text-base 2xl:text-base ">{{
-                item.label
-              }}</span>
+            <span :class="[item.icon, 'text-color']" />
+            <span class="text-primary text-sm font-semibold lg:text-base xl:text-base 2xl:text-base">
+              {{ item.label }}
+            </span>
           </a>
         </router-link>
         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-          <span class="text-color text-sm lg:text-base xl:text-base 2xl:text-base ">{{ item.label }}</span>
+          <span class="text-color text-sm lg:text-base xl:text-base 2xl:text-base">
+            {{ item.label }}
+          </span>
         </a>
       </template>
     </Breadcrumb>
     <div class="ml-2 w-[9rem]" v-if="!isLoggedIn && !isMobile">
-      <div class="bg-surface-200 dark:bg-surface-900 rounded-lg p-4 my-auto">
+      <div
+        class="my-auto cursor-pointer rounded-lg bg-surface-200 p-4 dark:bg-surface-900"
+        @click="$router.push({ name: 'login' })"
+      >
         <Avatar shape="circle">
           <template #icon>
             <i class="pi pi-sign-in text-slate-950 dark:text-slate-50"></i>
           </template>
         </Avatar>
-        <span class="text-slate-950 dark:text-slate-50 ">{{ isLoggedIn ? 'Salir' : "Ingresar" }}</span>
+        <span class="text-slate-950 dark:text-slate-50"> Ingresar </span>
       </div>
     </div>
   </header>
 </template>
 <script setup>
-
-import {computed, ref} from "vue";
-import {useMainStore} from '@/store/main.store.js'
-import {helper} from "@/utils/helper.js";
+import { computed, ref } from "vue";
+import { useMainStore } from "@/store/main.store.js";
+import { helper } from "@/utils/helper.js";
+import { useAuthStore } from "@/store/auth/auth.store.js";
 
 const home = ref({
-  icon: 'pi pi-home',
-  route: 'dashboard'
+  icon: "pi pi-home",
+  route: "dashboard",
 });
-const mainStore = useMainStore()
+const mainStore = useMainStore();
 
+const authStore = useAuthStore();
 const isLoggedIn = computed(() => {
-  // Todo: agregar storage para usuario loguedo
-  return true
-})
+  return authStore.isLoggedIn;
+});
+
 const isMobile = computed(() => {
-  return helper.isMobileDevice()
-})
+  return helper.isMobileDevice();
+});
 const breadcrumb_items = computed(() => {
-  return mainStore.getBreadcrumbs
-})
+  return mainStore.getBreadcrumbs;
+});
 </script>
