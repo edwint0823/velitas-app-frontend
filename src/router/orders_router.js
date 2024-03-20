@@ -10,14 +10,20 @@ export default [
             {
                 path: '/create-order',
                 name: "create_order",
-                component: () => import( "../views/orders/create_order.vue"),
+                component: () => import( "../views/orders/CreateOrder.vue"),
                 meta: {title: 'Crear Pedido'}
             },
             {
                 path: '/list-orders',
                 name: "list_orders",
-                component: () => import( "../views/orders/list_order.vue"),
+                component: () => import( "../views/orders/ListOrder.vue"),
                 meta: {title: 'Listar Pedidos'}
+            },
+            {
+                path: '/search-order/:code?',
+                name: "search_order",
+                component: () => import( "../views/orders/SearchOrder.vue"),
+                meta: {title: 'Buscar pedido'}
             }
         ]
     }

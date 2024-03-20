@@ -3,7 +3,7 @@ import {defineStore} from 'pinia'
 export const useOrdersCreateStore = defineStore({
     id: 'ordersCreateStore',
     state: () => ({
-        clientInfo: {
+        customerInfo: {
             email: '',
             name: '',
             tel: '',
@@ -11,14 +11,14 @@ export const useOrdersCreateStore = defineStore({
         }
     }),
     getters: {
-        getClientInfo: (state) => state.clientInfo
+        getCustomerInfo: (state) => state.customerInfo
     },
     actions: {
-        setClientInfo(clientInfo) {
-            this.clientInfo = clientInfo
+        setCustomerInfo(customerInfo) {
+            this.customerInfo = customerInfo
         },
-        setPriceTypeClientInfo(PriceType) {
-            this.clientInfo.priceType = PriceType
+        setPriceTypeCustomerInfo(PriceType) {
+            this.customerInfo.priceType = PriceType
         }
     }
 })

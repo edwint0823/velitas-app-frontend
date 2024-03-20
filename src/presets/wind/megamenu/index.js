@@ -76,7 +76,7 @@ export default {
                 'text-surface-500 dark:text-white/70': !context.focused && !context.active,
                 'text-surface-500 dark:text-white/70 bg-surface-200 dark:bg-black/70': context.focused && !context.active,
                 'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': context.focused && context.active,
-                'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70': !context.focused && context.active
+                'text-surface-900 dark:text-surface-0/80 bg-surface-50 dark:bg-black/70 ': !context.focused && context.active
             },
 
             // Hover States
@@ -208,6 +208,7 @@ export default {
         ]
     },
     end: {
-        class: 'ml-auto self-center'
+        class: 'h-auto pb-0 ml-auto self-center lg:h-full lg:pb-4 lg:ml-0 lg:self-auto xl:h-full xl:pb-4 xl:ml-0 xl:self-auto 2xl:h-full 2xl:pb-4 2xl:ml-0 2xl:self-auto'
+        // class: 'ml-auto self-center h-full'
     }
 };
