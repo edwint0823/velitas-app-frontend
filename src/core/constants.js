@@ -223,7 +223,11 @@ export const registerMessages = {
   requiredPassword: "La contraseña es requerida",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
 };
-
+export const paginatedListOrders = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  deliveryDateFilterError: "La fecha final de entrega no puede ser antes de la fecha inicial",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",
@@ -236,4 +240,17 @@ export const errorMessages = {
 
 export const successMessages = {
   userRegistered: "Usuario registrado con éxito",
+};
+
+export const statusColorPalette = {
+  Creado: "text-orange-500",
+  "Pendiente Corel": "text-amber-600",
+  "En Corel": "text-yellow-600",
+  Impreso: "text-lime-600",
+  "En Proceso de marcado": "text-teal-600",
+  Marcado: "text-cyan-600",
+  "En Proceso de Empaquetado": "text-sky-600",
+  Entregado: "text-green-600",
+  Cancelado: "text-red-600",
+  Empacado: "text-emerald-600",
 };
