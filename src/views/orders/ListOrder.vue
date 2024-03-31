@@ -82,6 +82,12 @@
                 <h6 class="font-light">Creado: {{ order.created_at }}</h6>
                 <h6 class="font-light">Cantidad: {{ order.total_quantity }}</h6>
                 <h6 class="font-light">Total: {{ $h.formatCurrency(order.total_price, 2) }}</h6>
+                <div class="mt-4 flex justify-center gap-4">
+                  <Button v-tooltip.top="'Registrar pago'" icon="pi pi-money-bill" severity="success" />
+                  <Button v-tooltip.top="'Ver detalle'" icon="pi pi-eye" severity="info" />
+                  <Button v-tooltip.top="'Editar'" icon="pi pi-pencil" severity="warning" />
+                  <Button v-tooltip.top="'Cambiar estado'" icon="pi pi-sync" severity="help" />
+                </div>
               </div>
             </div>
           </template>
