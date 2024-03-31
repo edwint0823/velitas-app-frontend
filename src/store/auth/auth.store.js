@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { useRouter } from "vue-router";
 import Cookies from "js-cookie";
+import router from "../../router/index.js";
 
 export const useAuthStore = defineStore({
   id: "authStore",
@@ -12,6 +12,12 @@ export const useAuthStore = defineStore({
     getUserInfo: (state) => state.user,
     getToken: (state) => state.token,
     isLoggedIn: (state) => {
+      if (state.token === null && Cookies.get("token") !== undefined) {
+        state.setToken(Cookies.get("token"));
+      }
+      if (state.user === null && Cookies.get("user") !== undefined) {
+        state.setUserInfo(JSON.parse(Cookies.get("user")));
+      }
       return state.token !== null;
     },
   },
@@ -29,6 +35,7 @@ export const useAuthStore = defineStore({
       this.user = null;
       Cookies.remove("user");
       Cookies.remove("token");
+      router.push({ name: "login" });
     },
   },
 });
