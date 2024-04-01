@@ -84,7 +84,12 @@
                 <h6 class="font-light">Total: {{ $h.formatCurrency(order.total_price, 2) }}</h6>
                 <div class="mt-4 flex justify-center gap-4">
                   <Button v-tooltip.top="'Registrar pago'" icon="pi pi-money-bill" severity="success" />
-                  <Button v-tooltip.top="'Ver detalle'" icon="pi pi-eye" severity="info" />
+                  <Button
+                    v-tooltip.top="'Ver detalle'"
+                    icon="pi pi-eye"
+                    severity="info"
+                    @click="openDetailModal(order)"
+                  />
                   <Button v-tooltip.top="'Editar'" icon="pi pi-pencil" severity="warning" />
                   <Button v-tooltip.top="'Cambiar estado'" icon="pi pi-sync" severity="help" />
                 </div>
@@ -104,11 +109,13 @@
         </DataView>
       </div>
     </div>
+    <ModalOrderDetail ref="orderDetailRef" />
   </div>
 </template>
 <script setup>
 import { computed, inject, onMounted, ref } from "vue";
 import EmptyView from "@/components/general/EmptyView.vue";
+import ModalOrderDetail from "@/components/orders/ModalOrderDetail.vue";
 import { useMainStore } from "@/store/main.store.js";
 import { helper } from "@/utils/helper.js";
 import { paginateOrderList } from "@/services/orders/order.service.js";
@@ -123,6 +130,7 @@ const isMobile = computed(() => {
   return helper.isMobileDevice();
 });
 
+const orderDetailRef = ref(null);
 const filters = ref({
   orders_code: [],
   customer_name: "",
@@ -207,6 +215,10 @@ const searchOrder = async () => {
 };
 const statusColor = (statusName) => {
   return statusColorPalette[statusName];
+};
+
+const openDetailModal = (order) => {
+  orderDetailRef.value.openModal(order);
 };
 onMounted(() => {
   mainStore.setBreadcrumbs([{ label: "Pedidos" }, { label: "Lista de pedidos", route: "list_orders" }]);
