@@ -1,5 +1,4 @@
 import axios from "../../libs/axios.lib.js";
-import Cookies from "js-cookie";
 
 const API_BACKEND_VELAS = import.meta.env.VITE_API_BACKEND_VELAS;
 
@@ -17,7 +16,7 @@ export const getOrderByCode = async (code) => {
 export const paginateOrderList = async (pageNumber, pageSize, payload) => {
   return await axios.get(`${API_BACKEND_VELAS}/order/paginate_list/${pageSize}/${pageNumber}`, {
     headers: {
-      authorization: `Baerer ${Cookies.get("token")}`,
+      auth: true,
     },
     params: { ...payload },
   });

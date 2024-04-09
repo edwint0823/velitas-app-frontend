@@ -3,10 +3,15 @@ import Swal from "sweetalert2";
 import { errorMessages, HttpStatus } from "@/core/constants.js";
 import { useAuthStore } from "@/store/auth/auth.store.js";
 import { useRouter } from "vue-router";
+import Cookies from "js-cookie";
 
 const authStore = useAuthStore();
 axios.interceptors.request.use((request) => {
   document.getElementById("loading-component").classList.remove("hidden");
+  if (request.headers.auth) {
+    request.headers.authorization = `Baerer ${Cookies.get("token")}`;
+    delete request.headers.auth;
+  }
   return request;
 });
 
