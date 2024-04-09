@@ -21,3 +21,15 @@ export const paginateOrderList = async (pageNumber, pageSize, payload) => {
     params: { ...payload },
   });
 };
+
+export const updateOrderStatus = async (orderCode, newStatusId) => {
+  return await axios.patch(
+    `${API_BACKEND_VELAS}/order/update_status/${orderCode}/${newStatusId}`,
+    {},
+    {
+      headers: {
+        auth: true,
+      },
+    },
+  );
+};

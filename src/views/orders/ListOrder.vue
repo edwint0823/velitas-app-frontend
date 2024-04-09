@@ -91,7 +91,12 @@
                     @click="openDetailModal(order)"
                   />
                   <Button v-tooltip.top="'Editar'" icon="pi pi-pencil" severity="warning" />
-                  <Button v-tooltip.top="'Cambiar estado'" icon="pi pi-sync" severity="help" />
+                  <Button
+                    v-tooltip.top="'Cambiar estado'"
+                    icon="pi pi-sync"
+                    severity="help"
+                    @click="openChangeStatusModal(order)"
+                  />
                 </div>
               </div>
             </div>
@@ -110,6 +115,7 @@
       </div>
     </div>
     <ModalOrderDetail ref="orderDetailRef" />
+    <ModalChangeOrderStatus ref="orderStatusModalRef" @order-status-updated="searchOrder" />
   </div>
 </template>
 <script setup>
@@ -119,8 +125,9 @@ import ModalOrderDetail from "@/components/orders/ModalOrderDetail.vue";
 import { useMainStore } from "@/store/main.store.js";
 import { helper } from "@/utils/helper.js";
 import { paginateOrderList } from "@/services/orders/order.service.js";
-import { paginatedListOrders, statusColorPalette } from "@/core/constants.js";
+import { paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
+import ModalChangeOrderStatus from "@/components/orders/ModalChangeOrderStatus.vue";
 
 const dayjs = useDayJs();
 const swal = inject("$swal");
@@ -131,6 +138,7 @@ const isMobile = computed(() => {
 });
 
 const orderDetailRef = ref(null);
+const orderStatusModalRef = ref(null);
 const filters = ref({
   orders_code: [],
   customer_name: "",
@@ -172,8 +180,8 @@ const searchOrder = async () => {
   ) {
     swal({
       icon: "warning",
-      title: paginatedListOrders.validateFiltersTittle,
-      text: paginatedListOrders.deliveryDateFilterError,
+      title: paginatedListOrdersMessages.validateFiltersTittle,
+      text: paginatedListOrdersMessages.deliveryDateFilterError,
     });
     return;
   }
@@ -184,8 +192,8 @@ const searchOrder = async () => {
   ) {
     swal({
       icon: "warning",
-      title: paginatedListOrders.validateFiltersTittle,
-      text: paginatedListOrders.createdAtFilterError,
+      title: paginatedListOrdersMessages.validateFiltersTittle,
+      text: paginatedListOrdersMessages.createdAtFilterError,
     });
     return;
   }
@@ -219,6 +227,9 @@ const statusColor = (statusName) => {
 
 const openDetailModal = (order) => {
   orderDetailRef.value.openModal(order);
+};
+const openChangeStatusModal = (order) => {
+  orderStatusModalRef.value.openStatusModal(order);
 };
 onMounted(() => {
   mainStore.setBreadcrumbs([{ label: "Pedidos" }, { label: "Lista de pedidos", route: "list_orders" }]);

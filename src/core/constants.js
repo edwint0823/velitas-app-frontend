@@ -223,11 +223,18 @@ export const registerMessages = {
   requiredPassword: "La contraseña es requerida",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
 };
-export const paginatedListOrders = {
+export const paginatedListOrdersMessages = {
   validateFiltersTittle: "Verifique los filtros a aplicar",
   deliveryDateFilterError: "La fecha final de entrega no puede ser antes de la fecha inicial",
   createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
 };
+
+export const updateOrderStatusMessages = {
+  sameStatusErrorTitle: "Estado sin cambios",
+  sameStatusErrorText: "El estado que ingreso es el mismo que tiene el pedido actualmente. Por favor verificar",
+  updateSuccessTitle: "Estado del pedido actualizado",
+};
+
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",
