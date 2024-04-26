@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-    <img src="/images/empty.svg" alt="empty" class="w-1/2 md:w-1/5" />
+    <img :src="imageUrl" alt="empty" :class="imageClass" />
     <p class="text-center text-base font-bold md:text-xl">{{ message }}</p>
   </div>
 </template>
@@ -10,6 +10,16 @@ const props = defineProps({
     type: String,
     required: false,
     default: "No se encontraron elementos",
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+    default: "/images/empty.svg",
+  },
+  imageClass: {
+    type: String,
+    required: true,
+    default: "w-1/2 md:w-1/5",
   },
 });
 </script>

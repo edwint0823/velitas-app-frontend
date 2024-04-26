@@ -66,7 +66,7 @@
     <h2 class="mb-3 mt-5 text-xl font-bold">Listado de pedidos</h2>
     <div>
       <div v-if="!orders.length">
-        <EmptyView message="No se encontraron pedidos con los filtros aplicados" />
+        <EmptyView message="No se encontraron pedidos con los filtros aplicados" :image-class="'w-1/2 md:w-1/5'" />
       </div>
       <div v-else>
         <DataView :value="orders" layout="grid">
@@ -79,6 +79,7 @@
                 </div>
                 <h5 class="mb-5 font-light">{{ order.customer_name }}</h5>
                 <h6 class="font-light">Entrega: {{ order.delivery_date }}</h6>
+                <h6 class="font-light">Dirección: {{ order.delivery_address }}</h6>
                 <h6 class="font-light">Creado: {{ order.created_at }}</h6>
                 <h6 class="font-light">Cantidad: {{ order.total_quantity }}</h6>
                 <h6 class="font-light">Total: {{ $h.formatCurrency(order.total_price, 2) }}</h6>

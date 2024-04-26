@@ -33,3 +33,11 @@ export const updateOrderStatus = async (orderCode, newStatusId) => {
     },
   );
 };
+
+export const getDetailAndBags = async (orderCode) => {
+  return await axios.get(`${API_BACKEND_VELAS}/order/get_details_and_bags/${orderCode}`, {
+    headers: {
+      auth: true,
+    },
+  });
+};
