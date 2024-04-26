@@ -60,6 +60,9 @@ export const baseStructureOrderDetailByCode = {
   deliveryDate: "1999-01-01",
   statusName: "",
   publicStatusName: "",
+  deliveryAddress: "",
+  deliveryPrice: 0,
+  additionalInfo: "",
   orderDetails: [
     {
       candleOptionName: "",
