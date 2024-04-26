@@ -196,6 +196,7 @@ export const createOrderValidation = {
   requiredName: "El nombre del cliente es requerido",
   requiredPhone: "El numero telefónico es requerido",
   completePhone: "Ingrese el numero telefónico completo",
+  requiredDeliveryAddress: "La dirección de envío es obligatoria",
 };
 export const createDetailOrderMessages = {
   noCandleSelected: "Seleccione una vela para poder realizar la acción",
@@ -206,6 +207,8 @@ export const createDetailOrderMessages = {
   detailSuccessCreate:
     "La fecha estimada para su entrega es para { date }. \n Si desea  conocer el estado de su pedido puede dar click { link }",
   candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
+  deliveryAddressRequired: "La dirección de envío es requerida",
+  deliverAddressMaxLength: "La dirección de envío no puede tener mas de 255 caracteres",
 };
 
 export const loginMessages = {
