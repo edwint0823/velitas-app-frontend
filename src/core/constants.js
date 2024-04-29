@@ -54,6 +54,15 @@ export const warnTitleMessage = "Acción no permitida";
 export const defaultObservationValue = "Sin observaciones";
 export const statusNameValidToCancel = ["creado", "pendiente corel", "en corel"];
 export const statusPublicNameCancel = "Cancelado";
+export const statusForCandleInventoryMovement = {
+  name: "En Proceso de marcado",
+  order: 5,
+};
+
+export const statusForBagInventoryMovement = {
+  name: "En Proceso de Empaquetado",
+  order: 7,
+};
 export const baseStructureOrderDetailByCode = {
   customerName: "",
   totalPrice: 0,
@@ -238,6 +247,11 @@ export const paginatedListOrdersMessages = {
 export const updateOrderStatusMessages = {
   sameStatusErrorTitle: "Estado sin cambios",
   sameStatusErrorText: "El estado que ingreso es el mismo que tiene el pedido actualmente. Por favor verificar",
+  inventoryMovementQuestionTittle: "Se realizara un movimiento de inventario",
+  candleInventoryMovementText:
+    "Al actualizar el estado se realizara una salida de inventario de velas, ¿Esta seguro de realizar esta acción ?",
+  bagInventoryMovementText:
+    "Al actualizar el estado se realizara una salida de inventario de bolsas, ¿Esta seguro de realizar esta acción ?",
   updateSuccessTitle: "Estado del pedido actualizado",
 };
 

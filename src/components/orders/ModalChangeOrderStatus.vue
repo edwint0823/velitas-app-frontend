@@ -18,14 +18,18 @@
       />
     </div>
     <div class="flex justify-center">
-      <Button label="Actualizar" icon="pi pi-save" @click="update" />
+      <Button label="Actualizar" icon="pi pi-save" @click="verifyUpdate" />
     </div>
   </Dialog>
 </template>
 <script setup>
 import { inject, ref } from "vue";
 import { statusListByOrder } from "@/services/status/status.service.js";
-import { updateOrderStatusMessages } from "@/core/constants.js";
+import {
+  statusForBagInventoryMovement,
+  statusForCandleInventoryMovement,
+  updateOrderStatusMessages,
+} from "@/core/constants.js";
 import { updateOrderStatus } from "@/services/orders/order.service.js";
 
 const emit = defineEmits(["orderStatusUpdated"]);
@@ -49,7 +53,7 @@ const openStatusModal = async (orderData) => {
   modalStatusVisible.value = true;
 };
 
-const update = async () => {
+const verifyUpdate = () => {
   if (orderInfo.value.statusId === orderInfo.value.newStatusId) {
     swal({
       icon: "warning",
@@ -58,7 +62,41 @@ const update = async () => {
     });
     return;
   }
-  await updateOrderStatus(orderInfo.value.code, orderInfo.value.newStatusId).then(({ data }) => {
+  const oldStatusSelectedExtraInfo = statusOptionList.value.find((option) => option.id === orderInfo.value.statusId);
+  const newStatusSelectedExtraInfo = statusOptionList.value.find((option) => option.id === orderInfo.value.newStatusId);
+  if (
+    oldStatusSelectedExtraInfo.order < statusForCandleInventoryMovement.order &&
+    newStatusSelectedExtraInfo.order >= statusForCandleInventoryMovement.order
+  ) {
+    swal({
+      icon: "question",
+      title: updateOrderStatusMessages.inventoryMovementQuestionTittle,
+      text: updateOrderStatusMessages.candleInventoryMovementText,
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonText: "Si",
+    }).then(async ({ value }) => {
+      if (value) await update();
+    });
+  }
+  if (
+    oldStatusSelectedExtraInfo.order < statusForCandleInventoryMovement.order &&
+    newStatusSelectedExtraInfo.order >= statusForBagInventoryMovement.order
+  ) {
+    swal({
+      icon: "question",
+      title: updateOrderStatusMessages.inventoryMovementQuestionTittle,
+      text: updateOrderStatusMessages.bagInventoryMovementText,
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonText: "Si",
+    }).then(async ({ value }) => {
+      if (value) await update();
+    });
+  }
+};
+const update = async () => {
+  return await updateOrderStatus(orderInfo.value.code, orderInfo.value.newStatusId).then(({ data }) => {
     swal({
       icon: "success",
       title: updateOrderStatusMessages.updateSuccessTitle,

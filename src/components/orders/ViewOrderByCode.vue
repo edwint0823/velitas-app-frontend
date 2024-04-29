@@ -4,7 +4,7 @@
   </span>
   <Card class="my-5">
     <template #header>
-      <span class="p-2 text-xl font-semibold lg:text-2xl xl:text-2xl 2xl:text-2xl"> Información general </span>
+      <span class="m-2 text-xl font-semibold lg:text-2xl xl:text-2xl 2xl:text-2xl"> Información general </span>
     </template>
     <template #content>
       <div class="grid grid-cols-1 gap-2 px-2 md:grid-cols-2 lg:grid-cols-3">
