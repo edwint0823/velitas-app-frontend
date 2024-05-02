@@ -84,7 +84,25 @@ export const baseStructureOrderDetailByCode = {
   ],
 };
 
-export const createDetailsOrderDialButtonItems = [
+export const baseStructureForEditOrderByCode = {
+  code: "",
+  customerName: "",
+  customerPriceType: "",
+  statusName: "",
+  publicStatusName: "",
+  details: [
+    {
+      id: 0,
+      nameToAdd: "",
+      nameList: [{ name: "Juan", packAlone: true, deceased: false, pet: true }],
+      price: 0,
+      quantity: 0,
+      observation: "",
+      candleOptionId: 0,
+    },
+  ],
+};
+export const createOrEditDetailsOrderDialButtonItems = [
   {
     feature: "packAlone",
     tooltip: "Empacar solo",
@@ -196,6 +214,7 @@ export const breadCrumbsLabels = {
     main: "Pedidos",
     createOrder: "Crear Pedido",
     searchOrderByCode: "Ver pedido",
+    editOrder: "Editar Pedido",
   },
   dashboard: {
     main: "dashboard",
@@ -208,7 +227,6 @@ export const createOrderValidation = {
   requiredName: "El nombre del cliente es requerido",
   requiredPhone: "El numero telefónico es requerido",
   completePhone: "Ingrese el numero telefónico completo",
-  requiredDeliveryAddress: "La dirección de envío es obligatoria",
 };
 export const createDetailOrderMessages = {
   noCandleSelected: "Seleccione una vela para poder realizar la acción",
@@ -221,6 +239,19 @@ export const createDetailOrderMessages = {
   candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
   deliveryAddressRequired: "La dirección de envío es requerida",
   deliverAddressMaxLength: "La dirección de envío no puede tener mas de 255 caracteres",
+};
+
+export const editOrderValidation = {
+  requiredDeliveryAddress: "La dirección de envío es obligatoria",
+};
+
+export const editOrderMessages = {
+  noCandleSelected: "Seleccione una vela para poder realizar la acción",
+  candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
+  updateTitleError: "No es posible actualizar el pedido",
+  candleListEmpty: "Debe agregar al menos una vela al pedido",
+  nameListEmpty: "Todos las velas deben tener al menos un nombre",
+  candleNotSelected: "Algunas velas no tienen un tipo seleccionado",
 };
 
 export const loginMessages = {

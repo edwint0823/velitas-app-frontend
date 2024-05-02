@@ -2,9 +2,6 @@ import axios from "../../libs/axios.lib.js";
 
 const API_BACKEND_VELAS = import.meta.env.VITE_API_BACKEND_VELAS;
 
-export const getCandleListOptions = async () => {
-  return await axios.get(`${API_BACKEND_VELAS}/candle_options/candle_options_with_min_items`);
-};
 export const createCandleOrder = async (orderPayload) => {
   return axios.post(`${API_BACKEND_VELAS}/order/create`, orderPayload);
 };
@@ -36,6 +33,22 @@ export const updateOrderStatus = async (orderCode, newStatusId) => {
 
 export const getDetailAndBags = async (orderCode) => {
   return await axios.get(`${API_BACKEND_VELAS}/order/get_details_and_bags/${orderCode}`, {
+    headers: {
+      auth: true,
+    },
+  });
+};
+
+export const editOrderByCode = async (orderCode) => {
+  return await axios.get(`${API_BACKEND_VELAS}/order/edit_order/${orderCode}`, {
+    headers: {
+      auth: true,
+    },
+  });
+};
+
+export const updateOrderAndDetails = async (orderCode, orderPayload) => {
+  return await axios.put(`${API_BACKEND_VELAS}/order/update_order_and_details/${orderCode}`, orderPayload, {
     headers: {
       auth: true,
     },
