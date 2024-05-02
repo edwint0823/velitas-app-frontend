@@ -89,8 +89,7 @@ const { errors, defineField, handleSubmit, resetForm } = useForm({
 const [customer_email] = defineField("customer_email");
 const [customer_name] = defineField("customer_name");
 const [customer_tel] = defineField("customer_tel");
-// const [delivery_address] = defineField("delivery_address");
-// const [additional_info] = defineField("additional_info");
+
 const priceType = ref("detal");
 
 const showClientExtraInfo = ref(false);
@@ -107,7 +106,6 @@ const saveClientData = handleSubmit((values) => {
   });
   disableFields.value = true;
   showTableProducts.value = true;
-  console.log(disableFields.value, showTableProducts.value);
 });
 
 const searchClient = async () => {

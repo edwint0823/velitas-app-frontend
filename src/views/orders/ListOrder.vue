@@ -91,7 +91,12 @@
                     severity="info"
                     @click="openDetailModal(order)"
                   />
-                  <Button v-tooltip.top="'Editar'" icon="pi pi-pencil" severity="warning" />
+                  <Button
+                    v-tooltip.top="'Editar'"
+                    icon="pi pi-pencil"
+                    severity="warning"
+                    @click="$router.push({ name: 'edit_order', params: { code: order.code } })"
+                  />
                   <Button
                     v-tooltip.top="'Cambiar estado'"
                     icon="pi pi-sync"

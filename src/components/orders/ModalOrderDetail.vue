@@ -12,7 +12,7 @@
       <span><strong>Tipo de cliente:</strong> {{ orderInfo.customerPriceType }}</span>
       <span><strong>Fecha de entrega:</strong> {{ orderInfo.deliveryDate }}</span>
       <span><strong>Dirección de entrega:</strong> {{ orderInfo.deliveryAddress }}</span>
-      <span><strong>Precio de entrega:</strong> {{ $h.formatCurrency(orderInfo.deliverPrice, 0) }}</span>
+      <span><strong>Precio de entrega:</strong> {{ $h.formatCurrency(orderInfo.deliveryPrice, 0) }}</span>
       <span><strong>Fecha de creación:</strong> {{ orderInfo.createdAt }}</span>
       <span><strong>Cantidad total:</strong> {{ orderInfo.totalQuantity }}</span>
       <span><strong>Precio total:</strong> {{ $h.formatCurrency(orderInfo.totalPrice, 2) }}</span>
@@ -115,7 +115,7 @@ const orderInfo = ref({
   customerPriceType: "",
   statusName: "",
   statusPublicName: "",
-  deliverPrice: 0,
+  deliveryPrice: 0,
   deliveryAddress: "",
   additionalInfo: null,
   bagsNeed: [],
@@ -133,7 +133,7 @@ const openModal = async (order) => {
     orderInfo.value.customerPriceType = data.customerPriceType;
     orderInfo.value.statusName = data.statusName;
     orderInfo.value.statusPublicName = data.statusPublicName;
-    orderInfo.value.deliverPrice = data.deliverPrice;
+    orderInfo.value.deliveryPrice = data.deliveryPrice;
     orderInfo.value.deliveryAddress = data.deliveryAddress;
     orderInfo.value.additionalInfo = data.additionalInfo;
     orderInfo.value.details = data.orderDetails;
@@ -141,7 +141,6 @@ const openModal = async (order) => {
     orderInfo.value.payments = data.payments;
     modalVisible.value = true;
   });
-  console.log(orderInfo.value);
 };
 
 defineExpose({ openModal });

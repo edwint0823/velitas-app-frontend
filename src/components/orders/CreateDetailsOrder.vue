@@ -180,15 +180,16 @@
 import { onMounted, ref, computed, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useOrdersCreateStore } from "@/store/order/orders_create.store.js";
-import { createCandleOrder, getCandleListOptions } from "@/services/orders/order.service.js";
+import { createCandleOrder } from "@/services/orders/order.service.js";
+import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import {
-  createDetailsOrderDialButtonItems,
   createDetailOrderMessages,
   bulkPriceTypeName,
   retailPriceTypeName,
   warnTitleMessage,
   defaultObservationValue,
+  createOrEditDetailsOrderDialButtonItems,
 } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import { useRouter } from "vue-router";
@@ -205,7 +206,7 @@ const additionalInfo = ref("");
 const candleListOptions = ref([]);
 const minimumSizeBulkPrice = ref(0);
 const priceTypeChanged = ref(false);
-const dialButtonsItems = ref(createDetailsOrderDialButtonItems);
+const dialButtonsItems = ref(createOrEditDetailsOrderDialButtonItems);
 
 const customerInfo = computed(() => ordersCreateStore.getCustomerInfo);
 const totals = computed(() => {
@@ -240,7 +241,6 @@ const removeCandle = (candleIndex) => {
 const addNameToList = (index) => {
   const candleOption = candles.value[index].candleType;
   if (candleOption === undefined) {
-    console.log("entro", toast);
     toast.add({
       severity: "warn",
       summary: warnTitleMessage,
@@ -275,8 +275,14 @@ const addNameToList = (index) => {
 
 const removeCandleName = (candleIndex, NameIndex) => {
   candles.value[candleIndex].nameList = candles.value[candleIndex].nameList
-    .filter((x) => x.idx !== NameIndex)
-    .map((x, index) => ({ idx: index, name: x.name }));
+    .filter((item) => item.idx !== NameIndex)
+    .map((item, index) => ({
+      idx: index,
+      name: item.name,
+      pet: item.pet,
+      deceased: item.deceased,
+      packAlone: item.packAlone,
+    }));
   candles.value[candleIndex].quantity = candles.value[candleIndex].nameList.length;
   candles.value[candleIndex].price = computePriceCandle(candleIndex);
 };
@@ -329,13 +335,13 @@ const changeSpecialFeature = (feature, candleIndex, NameIndex) => {
         !candles.value[candleIndex].nameList[NameIndex].packAlone;
       break;
     case "deceased":
-      if (!candle.candleType.isPack && !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
+      if (!candle.candleType.isPack || !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
         candles.value[candleIndex].nameList[NameIndex].deceased =
           !candles.value[candleIndex].nameList[NameIndex].deceased;
       }
       break;
     case "pet":
-      if (!candle.candleType.isPack && !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
+      if (!candle.candleType.isPack || !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
         candles.value[candleIndex].nameList[NameIndex].pet = !candles.value[candleIndex].nameList[NameIndex].pet;
       }
       break;
@@ -343,17 +349,18 @@ const changeSpecialFeature = (feature, candleIndex, NameIndex) => {
 };
 
 const verifyChangePriceType = () => {
+  let priceTypeUpdated = false;
   if (totals.value.totalItems >= minimumSizeBulkPrice.value && customerInfo.value.priceType === retailPriceTypeName) {
     ordersCreateStore.setPriceTypeCustomerInfo(bulkPriceTypeName);
     priceTypeChanged.value = true;
-    candles.value = candles.value.map((value, index) => {
-      value.price = computePriceCandle(index);
-      return value;
-    });
+    priceTypeUpdated = true;
   }
   if (totals.value.totalItems < minimumSizeBulkPrice.value && priceTypeChanged.value) {
     ordersCreateStore.setPriceTypeCustomerInfo(retailPriceTypeName);
     priceTypeChanged.value = false;
+    priceTypeUpdated = true;
+  }
+  if (priceTypeUpdated) {
     candles.value = candles.value.map((value, index) => {
       value.price = computePriceCandle(index);
       return value;
@@ -450,7 +457,6 @@ const createOrder = async () => {
       location.reload();
     });
   }
-  console.log(orderCreatedData);
 };
 
 onMounted(async () => {
