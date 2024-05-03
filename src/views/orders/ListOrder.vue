@@ -59,7 +59,7 @@
         />
       </div>
       <div class="col-span-1 flex items-end justify-center gap-4 sm:col-span-2 md:justify-end lg:col-span-1">
-        <Button label="Buscar" icon="pi pi-search" @click="searchOrder" severity="info" />
+        <Button label="Buscar" icon="pi pi-search" @click="searchOrders" severity="info" />
         <Button label="Limpiar filtros" icon="pi pi-eraser" outlined severity="secondary" @click="clearFilters" />
       </div>
     </div>
@@ -84,7 +84,12 @@
                 <h6 class="font-light">Cantidad: {{ order.total_quantity }}</h6>
                 <h6 class="font-light">Total: {{ $h.formatCurrency(order.total_price, 2) }}</h6>
                 <div class="mt-4 flex justify-center gap-4">
-                  <Button v-tooltip.top="'Registrar pago'" icon="pi pi-money-bill" severity="success" />
+                  <Button
+                    v-tooltip.top="'Registrar pago'"
+                    icon="pi pi-money-bill"
+                    severity="success"
+                    @click="openAddPaymentModal(order.code)"
+                  />
                   <Button
                     v-tooltip.top="'Ver detalle'"
                     icon="pi pi-eye"
@@ -121,7 +126,8 @@
       </div>
     </div>
     <ModalOrderDetail ref="orderDetailRef" />
-    <ModalChangeOrderStatus ref="orderStatusModalRef" @order-status-updated="searchOrder" />
+    <ModalChangeOrderStatus ref="orderStatusModalRef" @order-status-updated="searchOrders" />
+    <ModalCreatePayment ref="orderPaymentModalRef" @payment-registered="searchOrders" />
   </div>
 </template>
 <script setup>
@@ -134,6 +140,7 @@ import { paginateOrderList } from "@/services/orders/order.service.js";
 import { paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import ModalChangeOrderStatus from "@/components/orders/ModalChangeOrderStatus.vue";
+import ModalCreatePayment from "@/components/orders/ModalCreatePayment.vue";
 
 const dayjs = useDayJs();
 const swal = inject("$swal");
@@ -145,6 +152,8 @@ const isMobile = computed(() => {
 
 const orderDetailRef = ref(null);
 const orderStatusModalRef = ref(null);
+const orderPaymentModalRef = ref(null);
+
 const filters = ref({
   orders_code: [],
   customer_name: "",
@@ -167,15 +176,15 @@ const clearFilters = () => {
   filters.value.delivery_date_end = null;
   filters.value.created_at_begin = null;
   filters.value.created_at_end = null;
-  searchOrder();
+  searchOrders();
 };
 const onPageChange = (event) => {
   paginator.value.page_size = event.rows;
   paginator.value.page_number = event.first + 1;
-  searchOrder();
+  searchOrders();
 };
 
-const searchOrder = async () => {
+const searchOrders = async () => {
   const payload = {
     filters: {},
   };
@@ -237,8 +246,12 @@ const openDetailModal = (order) => {
 const openChangeStatusModal = (order) => {
   orderStatusModalRef.value.openStatusModal(order);
 };
+const openAddPaymentModal = (code) => {
+  orderPaymentModalRef.value.openPaymentModal(code);
+};
+
 onMounted(() => {
   mainStore.setBreadcrumbs([{ label: "Pedidos" }, { label: "Lista de pedidos", route: "list_orders" }]);
-  searchOrder();
+  searchOrders();
 });
 </script>
