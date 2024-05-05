@@ -1,5 +1,28 @@
 <template>
   <div>
+    <Card class="mb-5">
+      <template #title>Información de envío</template>
+      <template #content>
+        <div class="grid grid-cols-1 gap-x-16 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+          <div class="flex flex-col gap-2">
+            <label for="delivery_address">Dirección de envío: </label>
+            <InputText id="delivery_address" v-model="deliveryAddress" type="text" class="w-full" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="additional_info">
+              <i
+                class="pi pi-info"
+                v-tooltip.top="
+                  'Puede agregar información como el nombre la persona que recoge , numero de cédula para envío por interrapidisimo'
+                "
+              ></i>
+              Información adicional:
+            </label>
+            <InputText id="additional_info" v-model="additionalInfo" type="text" class="w-full" />
+          </div>
+        </div>
+      </template>
+    </Card>
     <div class="sticky top-0 z-10 rounded-2xl bg-white/90">
       <div class="flex justify-between px-6 py-4">
         <span class="text-900 text-xl font-bold">Listado de velas</span>
@@ -157,15 +180,16 @@
 import { onMounted, ref, computed, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useOrdersCreateStore } from "@/store/order/orders_create.store.js";
-import { createCandleOrder, getCandleListOptions } from "@/services/orders/order.service.js";
+import { createCandleOrder } from "@/services/orders/order.service.js";
+import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import {
-  createDetailsOrderDialButtonItems,
   createDetailOrderMessages,
   bulkPriceTypeName,
   retailPriceTypeName,
   warnTitleMessage,
   defaultObservationValue,
+  createOrEditDetailsOrderDialButtonItems,
 } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import { useRouter } from "vue-router";
@@ -177,10 +201,12 @@ const swal = inject("$swal");
 const dayjs = useDayJs();
 
 const candles = ref([]);
+const deliveryAddress = ref("");
+const additionalInfo = ref("");
 const candleListOptions = ref([]);
 const minimumSizeBulkPrice = ref(0);
 const priceTypeChanged = ref(false);
-const dialButtonsItems = ref(createDetailsOrderDialButtonItems);
+const dialButtonsItems = ref(createOrEditDetailsOrderDialButtonItems);
 
 const customerInfo = computed(() => ordersCreateStore.getCustomerInfo);
 const totals = computed(() => {
@@ -215,7 +241,6 @@ const removeCandle = (candleIndex) => {
 const addNameToList = (index) => {
   const candleOption = candles.value[index].candleType;
   if (candleOption === undefined) {
-    console.log("entro", toast);
     toast.add({
       severity: "warn",
       summary: warnTitleMessage,
@@ -250,8 +275,14 @@ const addNameToList = (index) => {
 
 const removeCandleName = (candleIndex, NameIndex) => {
   candles.value[candleIndex].nameList = candles.value[candleIndex].nameList
-    .filter((x) => x.idx !== NameIndex)
-    .map((x, index) => ({ idx: index, name: x.name }));
+    .filter((item) => item.idx !== NameIndex)
+    .map((item, index) => ({
+      idx: index,
+      name: item.name,
+      pet: item.pet,
+      deceased: item.deceased,
+      packAlone: item.packAlone,
+    }));
   candles.value[candleIndex].quantity = candles.value[candleIndex].nameList.length;
   candles.value[candleIndex].price = computePriceCandle(candleIndex);
 };
@@ -304,13 +335,13 @@ const changeSpecialFeature = (feature, candleIndex, NameIndex) => {
         !candles.value[candleIndex].nameList[NameIndex].packAlone;
       break;
     case "deceased":
-      if (!candle.candleType.isPack && !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
+      if (!candle.candleType.isPack || !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
         candles.value[candleIndex].nameList[NameIndex].deceased =
           !candles.value[candleIndex].nameList[NameIndex].deceased;
       }
       break;
     case "pet":
-      if (!candle.candleType.isPack && !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
+      if (!candle.candleType.isPack || !lowerCasePackNames.includes(candle.nameList[NameIndex].name.toLowerCase())) {
         candles.value[candleIndex].nameList[NameIndex].pet = !candles.value[candleIndex].nameList[NameIndex].pet;
       }
       break;
@@ -318,17 +349,18 @@ const changeSpecialFeature = (feature, candleIndex, NameIndex) => {
 };
 
 const verifyChangePriceType = () => {
+  let priceTypeUpdated = false;
   if (totals.value.totalItems >= minimumSizeBulkPrice.value && customerInfo.value.priceType === retailPriceTypeName) {
     ordersCreateStore.setPriceTypeCustomerInfo(bulkPriceTypeName);
     priceTypeChanged.value = true;
-    candles.value = candles.value.map((value, index) => {
-      value.price = computePriceCandle(index);
-      return value;
-    });
+    priceTypeUpdated = true;
   }
   if (totals.value.totalItems < minimumSizeBulkPrice.value && priceTypeChanged.value) {
     ordersCreateStore.setPriceTypeCustomerInfo(retailPriceTypeName);
     priceTypeChanged.value = false;
+    priceTypeUpdated = true;
+  }
+  if (priceTypeUpdated) {
     candles.value = candles.value.map((value, index) => {
       value.price = computePriceCandle(index);
       return value;
@@ -363,6 +395,24 @@ const createOrder = async () => {
     });
     return;
   }
+
+  if ([undefined, ""].includes(deliveryAddress.value)) {
+    swal({
+      title: createDetailOrderMessages.createTitleError,
+      icon: "warning",
+      text: createDetailOrderMessages.deliveryAddressRequired,
+    });
+    return;
+  }
+  if (deliveryAddress.value.length > 255) {
+    swal({
+      title: createDetailOrderMessages.createTitleError,
+      icon: "warning",
+      text: createDetailOrderMessages.deliverAddressMaxLength,
+    });
+    return;
+  }
+
   const orderPayload = {
     customer: {
       email: customerInfo.value.email,
@@ -370,6 +420,8 @@ const createOrder = async () => {
       phone_number: customerInfo.value.tel,
       price_type: customerInfo.value.priceType,
     },
+    delivery_address: deliveryAddress.value,
+    additional_info: [undefined, ""].includes(additionalInfo.value) ? null : additionalInfo.value,
     candles: candles.value.map((candle) => ({
       candle_option_id: candle.candleType.id,
       name_list: candle.nameList.map((name) => {
@@ -381,14 +433,13 @@ const createOrder = async () => {
       observation: ["", null, undefined].includes(candle.observation) ? defaultObservationValue : candle.observation,
     })),
   };
-  console.log(orderPayload);
   const orderCreatedData = await createCandleOrder(orderPayload);
   if (orderCreatedData.status === 201) {
     const { data } = orderCreatedData;
     const orderCode = data.orderCode ? data.orderCode : "";
     const orderRoute = router.resolve({
       name: "search_order",
-      params: { orderCode },
+      params: { code: orderCode },
     }).href;
     const successMessage = createDetailOrderMessages.detailSuccessCreate
       .replace("{ date }", dayjs(data.estimatedDelivered).format("DD [de] MMMM"))
@@ -406,7 +457,6 @@ const createOrder = async () => {
       location.reload();
     });
   }
-  console.log(orderCreatedData);
 };
 
 onMounted(async () => {

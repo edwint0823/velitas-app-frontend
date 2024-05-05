@@ -1,11 +1,11 @@
 <template>
   <div style="min-height: 84vh">
     <Card class="mb-5">
-      <template #title>Información del Cliente</template>
+      <template #title>Información del cliente</template>
       <template #content>
         <div class="grid grid-cols-1 gap-x-16 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
           <div class="flex flex-col gap-2">
-            <label for="customer_email">Correo Electrónico: </label>
+            <label for="customer_email">Correo electrónico: </label>
             <div class="flex w-full items-center gap-2">
               <InputText
                 id="customer_email"
@@ -30,7 +30,7 @@
             <small class="text-red-600" :class="{ hidden: !errors.customer_name }">{{ errors.customer_name }}</small>
           </div>
           <div class="flex flex-col gap-2" v-if="showClientExtraInfo">
-            <label for="customer_tel">Num. Telefónico:</label>
+            <label for="customer_tel">Num. telefónico:</label>
             <InputMask
               id="customer_tel"
               v-model="customer_tel"
@@ -79,6 +79,8 @@ const schema = yup.object({
     .required(createOrderValidation.requiredPhone)
     .max(12, createOrderValidation.completePhone)
     .min(12, createOrderValidation.completePhone),
+  // delivery_address: yup.string().default("").required(createOrderValidation.requiredDeliveryAddress),
+  // additional_info: yup.string().default(""),
 });
 const { errors, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
@@ -87,6 +89,7 @@ const { errors, defineField, handleSubmit, resetForm } = useForm({
 const [customer_email] = defineField("customer_email");
 const [customer_name] = defineField("customer_name");
 const [customer_tel] = defineField("customer_tel");
+
 const priceType = ref("detal");
 
 const showClientExtraInfo = ref(false);

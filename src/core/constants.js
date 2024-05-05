@@ -54,12 +54,24 @@ export const warnTitleMessage = "Acción no permitida";
 export const defaultObservationValue = "Sin observaciones";
 export const statusNameValidToCancel = ["creado", "pendiente corel", "en corel"];
 export const statusPublicNameCancel = "Cancelado";
+export const statusForCandleInventoryMovement = {
+  name: "En Proceso de marcado",
+  order: 5,
+};
+
+export const statusForBagInventoryMovement = {
+  name: "En Proceso de Empaquetado",
+  order: 7,
+};
 export const baseStructureOrderDetailByCode = {
   customerName: "",
   totalPrice: 0,
   deliveryDate: "1999-01-01",
   statusName: "",
   publicStatusName: "",
+  deliveryAddress: "",
+  deliveryPrice: 0,
+  additionalInfo: "",
   orderDetails: [
     {
       candleOptionName: "",
@@ -72,7 +84,25 @@ export const baseStructureOrderDetailByCode = {
   ],
 };
 
-export const createDetailsOrderDialButtonItems = [
+export const baseStructureForEditOrderByCode = {
+  code: "",
+  customerName: "",
+  customerPriceType: "",
+  statusName: "",
+  publicStatusName: "",
+  details: [
+    {
+      id: 0,
+      nameToAdd: "",
+      nameList: [{ name: "Juan", packAlone: true, deceased: false, pet: true }],
+      price: 0,
+      quantity: 0,
+      observation: "",
+      candleOptionId: 0,
+    },
+  ],
+};
+export const createOrEditDetailsOrderDialButtonItems = [
   {
     feature: "packAlone",
     tooltip: "Empacar solo",
@@ -184,6 +214,7 @@ export const breadCrumbsLabels = {
     main: "Pedidos",
     createOrder: "Crear Pedido",
     searchOrderByCode: "Ver pedido",
+    editOrder: "Editar Pedido",
   },
   dashboard: {
     main: "dashboard",
@@ -206,6 +237,21 @@ export const createDetailOrderMessages = {
   detailSuccessCreate:
     "La fecha estimada para su entrega es para { date }. \n Si desea  conocer el estado de su pedido puede dar click { link }",
   candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
+  deliveryAddressRequired: "La dirección de envío es requerida",
+  deliverAddressMaxLength: "La dirección de envío no puede tener mas de 255 caracteres",
+};
+
+export const editOrderValidation = {
+  requiredDeliveryAddress: "La dirección de envío es obligatoria",
+};
+
+export const editOrderMessages = {
+  noCandleSelected: "Seleccione una vela para poder realizar la acción",
+  candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
+  updateTitleError: "No es posible actualizar el pedido",
+  candleListEmpty: "Debe agregar al menos una vela al pedido",
+  nameListEmpty: "Todos las velas deben tener al menos un nombre",
+  candleNotSelected: "Algunas velas no tienen un tipo seleccionado",
 };
 
 export const loginMessages = {
@@ -223,6 +269,22 @@ export const registerMessages = {
   requiredPassword: "La contraseña es requerida",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
 };
+export const paginatedListOrdersMessages = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  deliveryDateFilterError: "La fecha final de entrega no puede ser antes de la fecha inicial",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const updateOrderStatusMessages = {
+  sameStatusErrorTitle: "Estado sin cambios",
+  sameStatusErrorText: "El estado que ingreso es el mismo que tiene el pedido actualmente. Por favor verificar",
+  inventoryMovementQuestionTittle: "Se realizara un movimiento de inventario",
+  candleInventoryMovementText:
+    "Al actualizar el estado se realizara una salida de inventario de velas, ¿Esta seguro de realizar esta acción ?",
+  bagInventoryMovementText:
+    "Al actualizar el estado se realizara una salida de inventario de bolsas, ¿Esta seguro de realizar esta acción ?",
+  updateSuccessTitle: "Estado del pedido actualizado",
+};
 
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
@@ -236,4 +298,17 @@ export const errorMessages = {
 
 export const successMessages = {
   userRegistered: "Usuario registrado con éxito",
+};
+
+export const statusColorPalette = {
+  Creado: "text-orange-500",
+  "Pendiente Corel": "text-amber-600",
+  "En Corel": "text-yellow-600",
+  Impreso: "text-lime-600",
+  "En Proceso de marcado": "text-teal-600",
+  Marcado: "text-cyan-600",
+  "En Proceso de Empaquetado": "text-sky-600",
+  Entregado: "text-green-600",
+  Cancelado: "text-red-600",
+  Empacado: "text-emerald-600",
 };

@@ -3,7 +3,7 @@
     <MegaMenu :model="isLoggedIn ? items : []" class="w-full">
       <template #start v-if="!isLoggedIn">
         <div class="flex items-center justify-start">
-          <img src="/images/logos/logo_app.png" alt="" class="w-1/6" />
+          <img src="/images/logos/logo_app.png" alt="" class="w-10" />
           <span class="font-semibold text-surface-900 dark:text-white">VELITAS APP</span>
         </div>
       </template>
