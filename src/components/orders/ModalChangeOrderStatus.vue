@@ -49,11 +49,11 @@ const openStatusModal = async (orderData) => {
   });
   orderInfo.value.statusId = orderData.status_id;
   orderInfo.value.newStatusId = orderData.status_id;
-  orderInfo.value.code = orderData.status_order;
+  orderInfo.value.code = orderData.code;
   modalStatusVisible.value = true;
 };
 
-const verifyUpdate = () => {
+const verifyUpdate = async () => {
   if (orderInfo.value.statusId === orderInfo.value.newStatusId) {
     swal({
       icon: "warning",
@@ -68,7 +68,7 @@ const verifyUpdate = () => {
     oldStatusSelectedExtraInfo.order < statusForCandleInventoryMovement.order &&
     newStatusSelectedExtraInfo.order >= statusForCandleInventoryMovement.order
   ) {
-    swal({
+    await swal({
       icon: "question",
       title: updateOrderStatusMessages.inventoryMovementQuestionTittle,
       text: updateOrderStatusMessages.candleInventoryMovementText,
@@ -77,7 +77,9 @@ const verifyUpdate = () => {
       confirmButtonText: "Si",
     }).then(async ({ value }) => {
       if (value) await update();
+      return;
     });
+    return;
   }
   if (
     oldStatusSelectedExtraInfo.order < statusForCandleInventoryMovement.order &&
@@ -92,8 +94,11 @@ const verifyUpdate = () => {
       confirmButtonText: "Si",
     }).then(async ({ value }) => {
       if (value) await update();
+      return;
     });
+    return;
   }
+  await update();
 };
 const update = async () => {
   return await updateOrderStatus(orderInfo.value.code, orderInfo.value.newStatusId).then(({ data }) => {
@@ -101,6 +106,7 @@ const update = async () => {
       icon: "success",
       title: updateOrderStatusMessages.updateSuccessTitle,
       text: data.message,
+      allowOutsideClick: false,
     }).then(() => {
       orderInfo.value.statusId = 0;
       orderInfo.value.newStatusId = 0;
