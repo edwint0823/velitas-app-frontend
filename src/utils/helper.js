@@ -18,7 +18,7 @@ const helpers = {
   },
   isMobileDevice() {
     // window.innerWidth < 766
-    console.log(navigator.userAgent);
+    // console.log(navigator.userAgent);
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   },
 

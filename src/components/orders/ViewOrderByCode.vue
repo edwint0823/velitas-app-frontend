@@ -4,10 +4,10 @@
   </span>
   <Card class="my-5">
     <template #header>
-      <span class="text-xl font-semibold lg:text-2xl xl:text-2xl 2xl:text-2xl"> Información general </span>
+      <span class="m-2 text-xl font-semibold lg:text-2xl xl:text-2xl 2xl:text-2xl"> Información general </span>
     </template>
     <template #content>
-      <div class="grid grid-cols-1 gap-2 px-2 md:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-2 px-2 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col">
           <span class="font-semibold">Cliente</span>
           <span>{{ orderInfo.customerName }}</span>
@@ -20,6 +20,24 @@
           <span class="font-semibold">Fecha estimada de entrega</span>
           <span>
             {{ $dayjs(orderInfo.deliveryDate).format("MMMM DD [de] YYYY") }}
+          </span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-semibold">Dirección de entrega</span>
+          <span>
+            {{ orderInfo.deliveryAddress }}
+          </span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-semibold">Costo de entrega</span>
+          <span>
+            {{ orderInfo.deliveryPrice ? $h.formatCurrency(orderInfo.deliveryPrice, 0) : "No definido" }}
+          </span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-semibold">Información adicional</span>
+          <span>
+            {{ orderInfo.additionalInfo }}
           </span>
         </div>
         <div class="flex flex-col">
@@ -37,7 +55,7 @@
       <!--      </div>-->
     </template>
   </Card>
-  <span class="px-2 text-2xl font-semibold lg:text-3xl xl:text-3xl 2xl:text-3xl">Detalles del pedido</span>
+  <span class="px-2 text-xl font-semibold lg:text-3xl xl:text-3xl 2xl:text-3xl">Detalles del pedido</span>
   <DataView :value="orderInfo.orderDetails" layout="list" class="my-5">
     <template #empty>
       <div class="flex justify-center">No hay velas por mostrar</div>

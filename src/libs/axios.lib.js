@@ -2,10 +2,16 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { errorMessages, HttpStatus } from "@/core/constants.js";
 import { useAuthStore } from "@/store/auth/auth.store.js";
+import { useRouter } from "vue-router";
+import Cookies from "js-cookie";
 
 const authStore = useAuthStore();
 axios.interceptors.request.use((request) => {
   document.getElementById("loading-component").classList.remove("hidden");
+  if (request.headers.auth) {
+    request.headers.authorization = `Baerer ${Cookies.get("token")}`;
+    delete request.headers.auth;
+  }
   return request;
 });
 
@@ -20,7 +26,7 @@ axios.interceptors.response.use(
     if (status === HttpStatus.BAD_REQUEST) {
       let errorList = [];
       if (error.response.data.hasOwnProperty("detail")) {
-        errorList = response.data.detail;
+        errorList = error.response.data.detail;
       } else {
         for (let key in error.response.data) {
           if (Array.isArray(error.response.data[key])) {
