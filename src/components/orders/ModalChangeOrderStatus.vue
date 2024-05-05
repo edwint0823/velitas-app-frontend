@@ -49,7 +49,7 @@ const openStatusModal = async (orderData) => {
   });
   orderInfo.value.statusId = orderData.status_id;
   orderInfo.value.newStatusId = orderData.status_id;
-  orderInfo.value.code = orderData.code;
+  orderInfo.value.code = orderData.status_order;
   modalStatusVisible.value = true;
 };
 
