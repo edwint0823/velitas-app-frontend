@@ -473,7 +473,7 @@ const updateOrder = handleSubmit(async (values) => {
         }),
         price: detail.price,
         quantity: detail.quantity,
-        observation: detail.quantity,
+        observation: detail.observation,
       };
     }),
   };

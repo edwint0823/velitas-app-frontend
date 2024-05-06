@@ -65,7 +65,7 @@
                   </div>
                   <div class="mb-5 mt-3 grid grid-cols-1 sm:grid-cols-2">
                     <span><strong>Precio:</strong> {{ $h.formatCurrency(order.price, 2) }}</span>
-                    <span><strong>Precio:</strong> {{ order.quantity }}</span>
+                    <span><strong>Cantidad:</strong> {{ order.quantity }}</span>
                   </div>
                   <div class="flex flex-col">
                     <span class="mb-3 font-semibold">Nombres</span>
