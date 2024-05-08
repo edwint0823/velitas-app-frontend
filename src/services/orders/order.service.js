@@ -54,3 +54,7 @@ export const updateOrderAndDetails = async (orderCode, orderPayload) => {
     },
   });
 };
+
+export const downloadExcel = async (orderCode) => {
+  return window.open(`${API_BACKEND_VELAS}/order/export_to_excel/${orderCode}`, "_blank");
+};
