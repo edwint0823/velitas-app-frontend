@@ -139,15 +139,21 @@ export const menuItems = [
           items: [
             {
               label: "Listar",
-              icon: "pi pi-box",
+              icon: "pi pi-list",
               iconColor: "",
               route: "list_orders",
             },
             {
               label: "Crear",
-              icon: "pi pi-box",
+              icon: "pi pi-plus",
               iconColor: "",
               route: "create_order",
+            },
+            {
+              label: "Buscar",
+              icon: "pi pi-search",
+              iconColor: "",
+              route: "search_order",
             },
           ],
         },
