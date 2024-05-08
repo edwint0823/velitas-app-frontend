@@ -1,5 +1,20 @@
 <template>
   <div style="min-height: 84vh">
+    <div class="grid grid-cols-2 px-2 pb-4 pt-2 md:grid-cols-5 lg:px-0">
+      <div class="col-span-0 flex justify-center md:col-span-4">
+        <span class="text-xl font-bold md:text-2xl">Crear pedido</span>
+      </div>
+      <div class="flex justify-end">
+        <Button
+          severity="help"
+          icon="pi pi-search"
+          raised
+          v-tooltip="'Buscar un pedido'"
+          :label="isMobile ? null : 'Buscar un pedido'"
+          @click="$router.push({ name: 'search_order' })"
+        />
+      </div>
+    </div>
     <Card class="mb-5">
       <template #title>Información del cliente</template>
       <template #content>
@@ -53,7 +68,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { useMainStore } from "@/store/main.store.js";
@@ -61,6 +76,11 @@ import { useOrdersCreateStore } from "@/store/order/orders_create.store.js";
 import { getDataClientByEmail } from "@/services/customers/customer.service.js";
 import CreateDetailsOrder from "@/components/orders/CreateDetailsOrder.vue";
 import { breadCrumbsLabels, createOrderValidation } from "@/core/constants.js";
+import { helper } from "@/utils/helper.js";
+
+const isMobile = computed(() => {
+  return helper.isMobileDevice();
+});
 
 const mainStore = useMainStore();
 const ordersCreateStore = useOrdersCreateStore();
@@ -79,8 +99,6 @@ const schema = yup.object({
     .required(createOrderValidation.requiredPhone)
     .max(12, createOrderValidation.completePhone)
     .min(12, createOrderValidation.completePhone),
-  // delivery_address: yup.string().default("").required(createOrderValidation.requiredDeliveryAddress),
-  // additional_info: yup.string().default(""),
 });
 const { errors, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
