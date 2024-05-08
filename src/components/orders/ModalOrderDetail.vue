@@ -41,7 +41,15 @@
                   <span>{{ $h.formatCurrency(data.amount, 2) }}</span>
                 </template>
               </Column>
-              <Column field="createdAt" header="Fecha de pago"></Column>
+              <Column field="createdAt" header="Fecha de pago" />
+              <template #footer>
+                <div class="flex justify-end">
+                  <Label>
+                    Total:
+                    {{ $h.formatCurrency(orderInfo.payments.reduce((acc, val) => (acc += val.amount), 0)) }}</Label
+                  >
+                </div>
+              </template>
             </DataTable>
           </div>
         </AccordionTab>
