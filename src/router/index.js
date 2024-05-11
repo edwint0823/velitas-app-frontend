@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import auth_routes from "./auth_router.js";
-import order_routes from "./orders_router.js";
-import mainRoutes from "./main_routes.js";
+import auth_routes from "./auth.router.js";
+import order_routes from "./orders.router.js";
+import candle_inventory_routes from "./candle_inventory.router.js";
+import bag_inventory_routes from "@/router/bag_inventory.router.js";
+import mainRoutes from "./main_routes.router.js";
 
-const routes = [...order_routes, ...auth_routes, ...mainRoutes];
+const routes = [...order_routes, ...candle_inventory_routes, ...bag_inventory_routes, ...auth_routes, ...mainRoutes];
 const router = createRouter({
   history: createWebHistory(),
   routes,

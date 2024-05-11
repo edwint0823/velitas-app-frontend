@@ -128,8 +128,35 @@ export const menuItems = [
     route: "dashboard",
   },
   {
-    label: "Pedidos",
+    label: "Inventario",
     icon: "pi pi-box",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Inventario",
+          items: [
+            {
+              label: "Listado Velas",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "list_candle_inventory",
+            },
+            {
+              label: "Listado Bolsas",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "list_bag_inventory",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
+    label: "Pedidos",
+    icon: "pi pi-truck",
     iconColor: "",
     root: true,
     items: [
@@ -258,6 +285,12 @@ export const editOrderMessages = {
   candleListEmpty: "Debe agregar al menos una vela al pedido",
   nameListEmpty: "Todos las velas deben tener al menos un nombre",
   candleNotSelected: "Algunas velas no tienen un tipo seleccionado",
+};
+
+export const createCandleInventoryMovementMessages = {
+  requiredQuantity: "La cantidad a registrar es requerida",
+  requiredMovementType: "El tipo de movimiento es requerido",
+  requiredObservation: "La observación del movimiento es requerida",
 };
 
 export const loginMessages = {

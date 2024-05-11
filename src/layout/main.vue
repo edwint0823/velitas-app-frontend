@@ -1,6 +1,6 @@
 <template>
   <Loading />
-  <div v-if="isMobile" class="bg-gradient-to-b from-green-400 to-sky-300">
+  <div v-if="isMobile" class="bg-gradient-to-b from-green-400/80 to-sky-300/80">
     <MobileMenu />
     <main class="flex-grow p-2" style="min-height: 100vh">
       <Breadcrumbs />
@@ -9,7 +9,7 @@
       </div>
     </main>
   </div>
-  <div v-else class="common-layout bg-gradient-to-b from-green-400 to-sky-300">
+  <div v-else class="common-layout bg-gradient-to-b from-green-400/80 to-sky-300/80">
     <DesktopMenu />
     <main class="flex-grow p-4" style="min-height: 100vh">
       <Breadcrumbs />
