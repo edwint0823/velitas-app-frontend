@@ -292,6 +292,11 @@ export const createCandleInventoryMovementMessages = {
   requiredMovementType: "El tipo de movimiento es requerido",
   requiredObservation: "La observación del movimiento es requerida",
 };
+export const createBagInventoryMovementMessages = {
+  requiredQuantity: "La cantidad a registrar es requerida",
+  requiredMovementType: "El tipo de movimiento es requerido",
+  requiredObservation: "La observación del movimiento es requerida",
+};
 
 export const loginMessages = {
   requiredUserName: "El nombre de usuario es requerido",

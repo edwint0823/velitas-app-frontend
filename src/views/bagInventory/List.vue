@@ -8,16 +8,16 @@
       <div class="grid grid-cols-1 gap-y-3 md:grid-cols-3">
         <div class="col-span-1 flex flex-col md:col-span-2">
           <label for="candle_name">Nombre:</label>
-          <InputText id="candle_name" v-model="filters.name" placeholder="Nombre de una vela" class="max-w-[300px]" />
+          <InputText id="candle_name" v-model="filters.name" placeholder="Nombre de una bolsa" class="max-w-[300px]" />
         </div>
         <div class="flex items-end justify-center gap-4 md:justify-end">
-          <Button label="Buscar" icon="pi pi-search" @click="getCandleInventory" severity="info" />
+          <Button label="Buscar" icon="pi pi-search" @click="getBagInventory" severity="info" />
           <Button label="Limpiar filtros" icon="pi pi-eraser" outlined severity="secondary" @click="clearFilters" />
         </div>
       </div>
     </template>
   </Card>
-  <DataView :value="candles" layout="grid">
+  <DataView :value="bags" layout="grid">
     <template #empty>
       <EmptyView message="No hay velas por mostrar con los filtros aplicados" class="p-2" />
     </template>
@@ -27,7 +27,7 @@
           <div class="flex flex-col rounded-lg border border-surface-400/80 p-4 dark:border-surface-500/80">
             <div class="flex content-center rounded-lg bg-surface-300/50 p-2 dark:bg-surface-700/80">
               <div class="relative mx-auto">
-                <img src="/images/candle_item.webp" alt="img vela" class="w-48 rounded-lg" />
+                <img src="/images/bag_item.webp" alt="img vela" class="w-48 rounded-lg" />
                 <Tag
                   :value="item.inventoryStatus"
                   :severity="getSeverity(item.inventoryStatus)"
@@ -35,8 +35,12 @@
                 />
               </div>
             </div>
-            <div class="mt-2 flex justify-between">
+            <div class="mt-2 flex items-center justify-between">
               <span class="text-lg font-semibold">{{ item.name }}</span>
+              <span class="text-sm">Capacidad {{ item.capacity }}</span>
+            </div>
+            <div class="mt-2 flex justify-between">
+              <span>{{ item.quantity }} Unidades</span>
               <Button
                 icon="pi pi-plus"
                 v-tooltip="'Registrar movimiento de inventario'"
@@ -44,46 +48,27 @@
                 @click="openModalRegister(item)"
               />
             </div>
-            <span>{{ item.quantity }} Unidades</span>
           </div>
         </div>
       </div>
     </template>
   </DataView>
-  <ModalCreateInventoryMovement ref="modalCandleInventoryMovementRef" @modal-closed="getCandleInventory" />
+  <ModalCreateBagInventoryMovement ref="modalCreateBagInventory" @modal-closed="getBagInventory" />
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { useMainStore } from "@/store/main.store.js";
+import { lisBagInventory } from "@/services/bagsInventory/bagInventory.service.js";
 import EmptyView from "@/components/general/EmptyView.vue";
-import { listCandleInventory } from "@/services/candlesInventory/candleInventory.service.js";
-import ModalCreateInventoryMovement from "@/components/candleInventory/ModalCreateInventoryMovement.vue";
+import ModalCreateBagInventoryMovement from "@/components/bagInventory/ModalCreateBagInventoryMovement.vue";
 
 const mainStore = useMainStore();
 
 const filters = ref({
   name: "",
 });
-const candles = ref([]);
-const modalCandleInventoryMovementRef = ref();
-
-const getCandleInventory = async () => {
-  const payload = {};
-  if (filters.value.name !== "") payload["name"] = filters.value.name;
-
-  await listCandleInventory(payload).then(({ data }) => {
-    candles.value = data;
-  });
-};
-
-const clearFilters = () => {
-  filters.value.name = "";
-  getCandleInventory();
-};
-
-const openModalRegister = (candle) => {
-  modalCandleInventoryMovementRef.value.openModal(candle);
-};
+const bags = ref([]);
+const modalCreateBagInventory = ref();
 
 const getSeverity = (status) => {
   switch (status) {
@@ -98,8 +83,26 @@ const getSeverity = (status) => {
   }
 };
 
+const getBagInventory = async () => {
+  const payload = {};
+  if (filters.value.name !== "") payload["name"] = filters.value.name;
+  await lisBagInventory(payload).then(({ data }) => {
+    bags.value = data;
+  });
+};
+
+const clearFilters = () => {
+  filters.value.name = "";
+  getBagInventory();
+};
+
+const openModalRegister = (bag) => {
+  modalCreateBagInventory.value.openModal(bag);
+};
+
 onMounted(async () => {
-  mainStore.setBreadcrumbs([{ label: "Inventario" }, { label: "Inv. velas", route: "list_candle_inventory" }]);
-  await getCandleInventory();
+  mainStore.setBreadcrumbs([{ label: "Inventario" }, { label: "Inv. bolsas", route: "list_bag_inventory" }]);
+  await getBagInventory();
 });
 </script>
+<style scoped></style>

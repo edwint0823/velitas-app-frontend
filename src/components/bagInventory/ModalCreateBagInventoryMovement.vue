@@ -1,8 +1,8 @@
 <template>
   <Dialog
-    v-model:visible="modalInventoryVisible"
+    v-model:visible="modalBagInventoryVisible"
     modal
-    :header="`Registrar movimiento de inventario para ${candleInfo.name}`"
+    :header="`Registrar movimiento de inventario a ${bagInfo.name}`"
     :style="{ 'min-width': '30vw' }"
     :auto-z-index="false"
   >
@@ -38,22 +38,22 @@
 <script setup>
 import { inject, ref } from "vue";
 import * as yup from "yup";
+import { createBagInventoryMovementMessages } from "@/core/constants.js";
 import { useForm } from "vee-validate";
-import { updateCandleInventoryQuantity } from "@/services/candlesInventory/candleInventory.service.js";
-import { createCandleInventoryMovementMessages } from "@/core/constants.js";
+import { updateBagInventoryQuantity } from "@/services/bagsInventory/bagInventory.service.js";
 
 const emit = defineEmits(["modalClosed"]);
 const swal = inject("$swal");
-const modalInventoryVisible = ref(false);
-const candleInfo = ref({
+const modalBagInventoryVisible = ref(false);
+const bagInfo = ref({
   id: 0,
   name: "",
 });
 
 const schema = yup.object({
-  quantity: yup.number().default(null).required(createCandleInventoryMovementMessages.requiredQuantity),
-  movementType: yup.boolean().default(null).required(createCandleInventoryMovementMessages.requiredMovementType),
-  observation: yup.string().default("").required(createCandleInventoryMovementMessages.requiredObservation),
+  quantity: yup.number().default(null).required(createBagInventoryMovementMessages.requiredQuantity),
+  movementType: yup.boolean().default(null).required(createBagInventoryMovementMessages.requiredMovementType),
+  observation: yup.string().default("").required(createBagInventoryMovementMessages.requiredObservation),
 });
 const { errors, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
@@ -63,10 +63,10 @@ const [movementType] = defineField("movementType");
 const [quantity] = defineField("quantity");
 const [observation] = defineField("observation");
 
-const openModal = (candle) => {
-  candleInfo.value.id = candle.id;
-  candleInfo.value.name = candle.name;
-  modalInventoryVisible.value = true;
+const openModal = (bag) => {
+  bagInfo.value.id = bag.id;
+  bagInfo.value.name = bag.name;
+  modalBagInventoryVisible.value = true;
 };
 
 const createInventoryMovement = handleSubmit(async (values) => {
@@ -75,7 +75,8 @@ const createInventoryMovement = handleSubmit(async (values) => {
     is_entry: values.movementType,
     observation: values.observation,
   };
-  await updateCandleInventoryQuantity(candleInfo.value.id, payload).then(({ data }) => {
+
+  await updateBagInventoryQuantity(bagInfo.value.id, payload).then(({ data }) => {
     swal({
       icon: "success",
       title: "Operación realizada con éxito",
@@ -83,9 +84,9 @@ const createInventoryMovement = handleSubmit(async (values) => {
       allowOutsideClick: false,
     }).then(() => {
       resetForm();
-      candleInfo.value.id = 0;
-      candleInfo.value.name = "";
-      modalInventoryVisible.value = false;
+      bagInfo.value.id = 0;
+      bagInfo.value.name = "";
+      modalBagInventoryVisible.value = false;
       emit("modalClosed");
     });
   });
@@ -93,3 +94,4 @@ const createInventoryMovement = handleSubmit(async (values) => {
 
 defineExpose({ openModal });
 </script>
+<style scoped></style>
