@@ -44,9 +44,9 @@
               <Column field="createdAt" header="Fecha de pago" />
               <template #footer>
                 <div class="flex justify-end">
-                  <Label>
+                  <label>
                     Total:
-                    {{ $h.formatCurrency(orderInfo.payments.reduce((acc, val) => (acc += val.amount), 0)) }}</Label
+                    {{ $h.formatCurrency(orderInfo.payments.reduce((acc, val) => (acc += val.amount), 0)) }}</label
                   >
                 </div>
               </template>

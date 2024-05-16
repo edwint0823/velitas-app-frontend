@@ -191,9 +191,7 @@ const onPageChange = (event) => {
 };
 
 const searchOrders = async () => {
-  const payload = {
-    filters: {},
-  };
+  const payload = {};
   if (
     filters.value.delivery_date_begin !== null &&
     filters.value.delivery_date_end !== null &&
@@ -220,22 +218,22 @@ const searchOrders = async () => {
   }
 
   if (filters.value.orders_code.length) {
-    payload["filters"]["orders_code"] = filters.value.orders_code.join(",");
+    payload["orders_code"] = filters.value.orders_code.join(",");
   }
   if (filters.value.customer_name !== "") {
-    payload["filters"]["customer_name"] = filters.value.customer_name.toUpperCase();
+    payload["customer_name"] = filters.value.customer_name.toUpperCase();
   }
   if (filters.value.delivery_date_begin !== null) {
-    payload["filters"]["delivery_date_begin"] = dayjs(filters.value.delivery_date_begin).format("YYYY-MM-DD");
+    payload["delivery_date_begin"] = dayjs(filters.value.delivery_date_begin).format("YYYY-MM-DD");
   }
   if (filters.value.delivery_date_end !== null) {
-    payload["filters"]["delivery_date_end"] = dayjs(filters.value.delivery_date_end).format("YYYY-MM-DD");
+    payload["delivery_date_end"] = dayjs(filters.value.delivery_date_end).format("YYYY-MM-DD");
   }
   if (filters.value.created_at_begin !== null) {
-    payload["filters"]["created_at_begin"] = dayjs(filters.value.created_at_begin).format("YYYY-MM-DD");
+    payload["created_at_begin"] = dayjs(filters.value.created_at_begin).format("YYYY-MM-DD");
   }
   if (filters.value.created_at_end !== null) {
-    payload["filters"]["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
+    payload["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
   }
   await paginateOrderList(paginator.value.page_number, paginator.value.page_size, payload).then(({ data }) => {
     orders.value = data.orders;
