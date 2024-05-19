@@ -188,6 +188,33 @@ export const menuItems = [
     ],
   },
   {
+    label: "Flujo de caja",
+    icon: "pi pi-dollar",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Flujo de caja",
+          items: [
+            {
+              label: "Transacciones",
+              icon: "pi pi-arrow-right-arrow-left",
+              iconColor: "",
+              route: "list_cash_movements",
+            },
+            {
+              label: "Efectivo disponible",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "list_bag_inventory",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
     label: "Clientes",
     icon: "pi pi-briefcase",
     iconColor: "",
@@ -328,6 +355,11 @@ export const updateOrderStatusMessages = {
   bagInventoryMovementText:
     "Al actualizar el estado se realizara una salida de inventario de bolsas, ¿Esta seguro de realizar esta acción ?",
   updateSuccessTitle: "Estado del pedido actualizado",
+};
+
+export const paginateListCashMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
 };
 
 export const errorMessages = {
