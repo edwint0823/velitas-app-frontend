@@ -325,6 +325,12 @@ export const createBagInventoryMovementMessages = {
   requiredObservation: "La observación del movimiento es requerida",
 };
 
+export const createOutMovementMessages = {
+  requiredBank: "El banco es requerido",
+  requiredAmount: "El valor del gasto es requerido",
+  requiredConcept: "El concepto del gasto es requerido",
+};
+
 export const loginMessages = {
   requiredUserName: "El nombre de usuario es requerido",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",

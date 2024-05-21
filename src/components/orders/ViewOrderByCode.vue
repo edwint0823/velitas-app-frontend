@@ -50,9 +50,6 @@
           </span>
         </div>
       </div>
-      <!--      <div>-->
-      <!--        <span>NOTA</span>-->
-      <!--      </div>-->
     </template>
   </Card>
   <span class="px-2 text-xl font-semibold lg:text-3xl xl:text-3xl 2xl:text-3xl">Detalles del pedido</span>

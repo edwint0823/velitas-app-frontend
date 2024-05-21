@@ -86,7 +86,7 @@
     </template>
   </Card>
   <div class="mb-4 flex items-center justify-end">
-    <Button label="Agregar gasto" icon="pi pi-plus" @click="" />
+    <Button label="Agregar gasto" icon="pi pi-plus" @click="createOutMovement" />
   </div>
   <div v-if="!movements.length">
     <EmptyView message="No se encontraron transacciones con los filtros aplicados" />
@@ -148,6 +148,7 @@
       </template>
     </DataView>
   </div>
+  <ModalCreateOutMovements ref="modalCreateOutMovementRef" @out-movement-created="searchMovements" />
 </template>
 <script setup>
 import { computed, inject, onMounted, ref } from "vue";
@@ -158,6 +159,7 @@ import EmptyView from "@/components/general/EmptyView.vue";
 import { paginateListMovements } from "@/services/cashMovements/cashMovement.service.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import { paginateListCashMovements } from "@/core/constants.js";
+import ModalCreateOutMovements from "@/components/cashMovements/ModalCreateOutMovements.vue";
 
 const dayjs = useDayJs();
 const swal = inject("$swal");
@@ -167,6 +169,7 @@ const isMobile = computed(() => {
   return helper.isMobileDevice();
 });
 
+const modalCreateOutMovementRef = ref();
 const bankEntityList = ref([]);
 const movements = ref([]);
 const paginator = ref({
@@ -252,6 +255,9 @@ const clearFilters = () => {
   searchMovements();
 };
 
+const createOutMovement = () => {
+  modalCreateOutMovementRef.value.openModalCreateOutMovement();
+};
 onMounted(async () => {
   mainStore.setBreadcrumbs([{ label: "Flujo de caja" }, { label: "Transacciones", route: "list_cash_movements" }]);
   await getBankEntitiesList().then(({ data }) => {

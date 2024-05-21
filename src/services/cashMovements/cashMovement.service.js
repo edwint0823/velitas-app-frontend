@@ -10,3 +10,11 @@ export const paginateListMovements = async (pageSize, pageNumber, payload) => {
     params: { ...payload },
   });
 };
+
+export const createOutMovement = async (payload) => {
+  return await axios.post(`${API_BACKEND_VELAS}/cash_movements/create_out_movement`, payload, {
+    headers: {
+      auth: true,
+    },
+  });
+};
