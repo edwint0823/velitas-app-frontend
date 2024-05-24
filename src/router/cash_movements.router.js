@@ -12,6 +12,12 @@ export default [
         component: () => import("../views/cashMovements/List.vue"),
         meta: { title: "Transacciones" },
       },
+      {
+        path: "/cash-available",
+        name: "cash_available",
+        component: () => import("../views/cashMovements/CashAvailable.vue"),
+        meta: { title: "Dinero físico disponible" },
+      },
     ],
   },
 ];

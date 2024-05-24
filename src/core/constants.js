@@ -54,6 +54,7 @@ export const warnTitleMessage = "Acción no permitida";
 export const defaultObservationValue = "Sin observaciones";
 export const statusNameValidToCancel = ["creado", "pendiente corel", "en corel"];
 export const statusPublicNameCancel = "Cancelado";
+export const statusIdCancel = 1;
 export const statusForCandleInventoryMovement = {
   name: "En Proceso de marcado",
   order: 5,
@@ -207,7 +208,7 @@ export const menuItems = [
               label: "Efectivo disponible",
               icon: "pi pi-list",
               iconColor: "",
-              route: "list_bag_inventory",
+              route: "cash_available",
             },
           ],
         },
@@ -368,6 +369,9 @@ export const paginateListCashMovements = {
   createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
 };
 
+export const updateCashInventoryQuantityMessages = {
+  requiredQuantity: "La cantidad es requerida",
+};
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",

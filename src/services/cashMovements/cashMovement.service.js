@@ -18,3 +18,28 @@ export const createOutMovement = async (payload) => {
     },
   });
 };
+
+export const listCashInventory = async (payload) => {
+  return await axios.get(`${API_BACKEND_VELAS}/cash_inventory/list`, {
+    headers: {
+      auth: true,
+    },
+    params: { ...payload },
+  });
+};
+
+export const editCashInventoryItem = async (id) => {
+  return await axios.get(`${API_BACKEND_VELAS}/cash_inventory/find_item/${id}`, {
+    headers: {
+      auth: true,
+    },
+  });
+};
+
+export const updateCashInventoryQuantity = async (id, payload) => {
+  return await axios.patch(`${API_BACKEND_VELAS}/cash_inventory/update_quantity/${id}`, payload, {
+    headers: {
+      auth: true,
+    },
+  });
+};
