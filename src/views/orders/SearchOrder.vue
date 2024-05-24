@@ -34,7 +34,7 @@
         class="max-[430px]:mr-3 max-[430px]:mt-3 sm:mr-5 sm:mt-5 lg:mr-0 lg:mt-0"
       />
     </div>
-    <ViewOrderByCode ref="viewOrderByCodeRef" />
+    <ViewOrderByCode ref="viewOrderByCodeRef" @order-updated="searchOrder" />
   </div>
 </template>
 <script setup>

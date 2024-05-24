@@ -117,7 +117,6 @@ const addPaymentToOrder = handleSubmit(async (values) => {
     amount: Number(values.amount),
     bank_entity_id: Number(values.bank_entity_id),
   };
-  console.log(payload);
   await addPaymentForOrder(payload).then(({ data }) => {
     swal({
       title: "Registro exitoso",

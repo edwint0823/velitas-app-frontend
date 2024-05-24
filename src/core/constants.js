@@ -54,6 +54,7 @@ export const warnTitleMessage = "Acción no permitida";
 export const defaultObservationValue = "Sin observaciones";
 export const statusNameValidToCancel = ["creado", "pendiente corel", "en corel"];
 export const statusPublicNameCancel = "Cancelado";
+export const statusIdCancel = 1;
 export const statusForCandleInventoryMovement = {
   name: "En Proceso de marcado",
   order: 5,
@@ -188,6 +189,33 @@ export const menuItems = [
     ],
   },
   {
+    label: "Flujo de caja",
+    icon: "pi pi-dollar",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Flujo de caja",
+          items: [
+            {
+              label: "Transacciones",
+              icon: "pi pi-arrow-right-arrow-left",
+              iconColor: "",
+              route: "list_cash_movements",
+            },
+            {
+              label: "Efectivo disponible",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "cash_available",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
     label: "Clientes",
     icon: "pi pi-briefcase",
     iconColor: "",
@@ -298,6 +326,12 @@ export const createBagInventoryMovementMessages = {
   requiredObservation: "La observación del movimiento es requerida",
 };
 
+export const createOutMovementMessages = {
+  requiredBank: "El banco es requerido",
+  requiredAmount: "El valor del gasto es requerido",
+  requiredConcept: "El concepto del gasto es requerido",
+};
+
 export const loginMessages = {
   requiredUserName: "El nombre de usuario es requerido",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
@@ -330,6 +364,14 @@ export const updateOrderStatusMessages = {
   updateSuccessTitle: "Estado del pedido actualizado",
 };
 
+export const paginateListCashMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const updateCashInventoryQuantityMessages = {
+  requiredQuantity: "La cantidad es requerida",
+};
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",

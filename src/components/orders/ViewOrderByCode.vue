@@ -50,9 +50,6 @@
           </span>
         </div>
       </div>
-      <!--      <div>-->
-      <!--        <span>NOTA</span>-->
-      <!--      </div>-->
     </template>
   </Card>
   <span class="px-2 text-xl font-semibold lg:text-3xl xl:text-3xl 2xl:text-3xl">Detalles del pedido</span>
@@ -121,17 +118,30 @@
   </DataView>
   <div
     class="flex justify-center pb-5"
-    v-if="statusNameValidToCancel.includes(orderInfo.statusName.toLocaleLowerCase())"
+    v-if="statusNameValidToCancel.includes(orderInfo.statusName.toLocaleLowerCase()) && isLoggedIn"
   >
     <Button severity="danger" icon="pi pi-times" label="Cancelar pedido" @click="cancelOrder" />
   </div>
 </template>
 
 <script setup>
-import { inject, ref } from "vue";
-import { baseStructureOrderDetailByCode, statusNameValidToCancel, statusPublicNameCancel } from "@/core/constants.js";
+import { computed, inject, ref } from "vue";
+import {
+  baseStructureOrderDetailByCode,
+  statusIdCancel,
+  statusNameValidToCancel,
+  statusPublicNameCancel,
+} from "@/core/constants.js";
+import { useAuthStore } from "@/store/auth/auth.store.js";
+import { updateOrderStatus } from "@/services/orders/order.service.js";
+
+const emit = defineEmits(["orderUpdated"]);
 
 const swal = inject("$swal");
+const authStore = useAuthStore();
+const isLoggedIn = computed(() => {
+  return authStore.isLoggedIn;
+});
 
 const orderInfo = ref(baseStructureOrderDetailByCode);
 const code = ref("0");
@@ -148,11 +158,18 @@ const cancelOrder = () => {
     confirmButtonText: "Si, cancelar el pedido",
     showDenyButton: true,
     denyButtonText: "No",
-  }).then(({ value }) => {
+  }).then(async ({ value }) => {
     if (value) {
-      console.log(code.value, "Si");
-    } else {
-      console.log(code.value, "No");
+      await updateOrderStatus(code.value, statusIdCancel).then(({ data }) => {
+        swal({
+          icon: "success",
+          title: "Operación realizada con éxito",
+          text: data.message,
+          allowOutsideClick: false,
+        }).then(() => {
+          emit("orderUpdated");
+        });
+      });
     }
   });
 };

@@ -9,3 +9,11 @@ export const getBankEntitiesList = async () => {
     },
   });
 };
+
+export const getAllBanksWithAmounts = async () => {
+  return await axios.get(`${API_BACKEND_VELAS}/bank_entity/list_with_amount`, {
+    headers: {
+      auth: true,
+    },
+  });
+};
