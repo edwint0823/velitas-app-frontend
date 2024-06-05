@@ -93,6 +93,9 @@
   </div>
   <div v-else>
     <DataView :value="movements" layout="list">
+      <template #empty>
+        <EmptyView message="No hay movimientos por mostrar con los filtros aplicados" class="p-2" />
+      </template>
       <template #list>
         <div class="p-1">
           <div
@@ -211,7 +214,7 @@ const searchMovements = async () => {
   ) {
     swal({
       icon: "warning",
-      tittle: paginateListCashMovements.validateFiltersTittle,
+      title: paginateListCashMovements.validateFiltersTittle,
       text: paginateListCashMovements.createdAtFilterError,
     });
     return;

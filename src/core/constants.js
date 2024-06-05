@@ -216,6 +216,39 @@ export const menuItems = [
     ],
   },
   {
+    label: "Auditoria",
+    icon: "pi pi-eye",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Auditoria",
+          items: [
+            {
+              label: "Mov. Inv. velas",
+              icon: "pi pi-warehouse",
+              iconColor: "",
+              route: "list_candle_inventory_movements",
+            },
+            {
+              label: "Mov. Inv. bolsas",
+              icon: "pi pi-warehouse",
+              iconColor: "",
+              route: "list_bags_inventory_movements",
+            },
+            {
+              label: "Cambios estado de pedido",
+              icon: "pi pi-receipt",
+              iconColor: "",
+              route: "list_order_change_status_logs",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
     label: "Clientes",
     icon: "pi pi-briefcase",
     iconColor: "",
@@ -365,6 +398,21 @@ export const updateOrderStatusMessages = {
 };
 
 export const paginateListCashMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListCandleInventoryMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListBagInventoryMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListOrderStatusChangeLogs = {
   validateFiltersTittle: "Verifique los filtros a aplicar",
   createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
 };
