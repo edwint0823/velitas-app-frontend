@@ -183,7 +183,7 @@ import { onMounted, ref, computed, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useOrdersCreateStore } from "@/store/order/orders_create.store.js";
 import { createCandleOrder } from "@/services/orders/order.service.js";
-import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
+import { getCandleListOptions } from "@/services/candleType/candleType.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import {
   createDetailOrderMessages,

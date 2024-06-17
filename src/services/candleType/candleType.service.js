@@ -9,3 +9,7 @@ export const listCandleTypes = async () => {
     },
   });
 };
+
+export const getCandleListOptions = async () => {
+  return await axios.get(`${API_BACKEND_VELAS}/candle_type/candle_options_with_min_items`);
+};

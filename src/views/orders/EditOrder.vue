@@ -206,7 +206,7 @@ import { useRoute, useRouter } from "vue-router";
 import { editOrderByCode, updateOrderAndDetails } from "@/services/orders/order.service.js";
 import * as yup from "yup";
 import { useForm } from "vee-validate";
-import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
+import { getCandleListOptions } from "@/services/candleType/candleType.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import { useToast } from "primevue/usetoast";
 
