@@ -216,6 +216,33 @@ export const menuItems = [
     ],
   },
   {
+    label: "Clientes",
+    icon: "pi pi-briefcase",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Clientes",
+          items: [
+            {
+              label: "Listar",
+              icon: "pi pi-box",
+              iconColor: "",
+              route: "list_orders",
+            },
+            {
+              label: "Crear",
+              icon: "pi pi-box",
+              iconColor: "",
+              route: "create_order",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
     label: "Auditoria",
     icon: "pi pi-eye",
     iconColor: "",
@@ -249,53 +276,20 @@ export const menuItems = [
     ],
   },
   {
-    label: "Clientes",
-    icon: "pi pi-briefcase",
+    label: "Configuración",
+    icon: "pi pi-cog",
     iconColor: "",
     root: true,
     items: [
       [
         {
-          label: "Clientes",
+          label: "Configuración",
           items: [
             {
-              label: "Listar",
-              icon: "pi pi-box",
+              label: "Parámetros",
+              icon: "pi pi-lightbulb",
               iconColor: "",
-              route: "list_orders",
-            },
-            {
-              label: "Crear",
-              icon: "pi pi-box",
-              iconColor: "",
-              route: "create_order",
-            },
-          ],
-        },
-      ],
-    ],
-  },
-  {
-    label: "Usuarios",
-    icon: "pi pi-box",
-    iconColor: "",
-    root: true,
-    items: [
-      [
-        {
-          label: "Usuarios",
-          items: [
-            {
-              label: "Listar",
-              icon: "pi pi-box",
-              iconColor: "",
-              route: "list_orders",
-            },
-            {
-              label: "Crear",
-              icon: "pi pi-box",
-              iconColor: "",
-              route: "create_order",
+              route: "list_config_params",
             },
           ],
         },
@@ -365,6 +359,9 @@ export const createOutMovementMessages = {
   requiredConcept: "El concepto del gasto es requerido",
 };
 
+export const editConfigParamMessages = {
+  requiredConfigParamValue: "El valor de parámetro es requerido",
+};
 export const loginMessages = {
   requiredUserName: "El nombre de usuario es requerido",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
