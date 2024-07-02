@@ -72,7 +72,7 @@ import { useDayJs } from "@/utils/useDayJs.js";
 import { computed, inject, onMounted, ref } from "vue";
 import { helper } from "@/utils/helper.js";
 import { orderChangeStatusLogsList } from "@/services/auditory/auditory.service.js";
-import { paginateListOrderStatusChangeLogs } from "@/core/constants.js";
+import { breadCrumbsLabels, paginateListOrderStatusChangeLogs } from "@/core/constants.js";
 import EmptyView from "@/components/general/EmptyView.vue";
 
 const mainStore = useMainStore();
@@ -143,9 +143,9 @@ const clearFilters = () => {
 };
 onMounted(async () => {
   mainStore.setBreadcrumbs([
-    { label: "Auditoria" },
+    { label: breadCrumbsLabels.auditory.main },
     {
-      label: "Cambios estado de pedido",
+      label: breadCrumbsLabels.auditory.orderStatusChangeLog,
       route: "list_order_change_status_logs",
     },
   ]);

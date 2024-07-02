@@ -28,7 +28,8 @@ import { useMainStore } from "@/store/main.store.js";
 import { onMounted, ref } from "vue";
 import EmptyView from "@/components/general/EmptyView.vue";
 import { getConfigParamsList } from "@/services/configurationService/configuration.service.js";
-import ModalEditConfigParam from "@/components/configParams/ModalEditConfigParam.vue";
+import ModalEditConfigParam from "@/components/configPages/ModalEditConfigParam.vue";
+import { breadCrumbsLabels } from "@/core/constants.js";
 
 const mainStore = useMainStore();
 
@@ -45,7 +46,13 @@ const openModalEditParam = (configParamInfo) => {
 };
 
 onMounted(async () => {
-  mainStore.setBreadcrumbs([{ label: "Configuración" }, { label: "Parámetros", route: "list_config_params" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.configuration.main },
+    {
+      label: breadCrumbsLabels.configuration.configParams,
+      route: "list_config_params",
+    },
+  ]);
   await getConfigParams();
 });
 </script>

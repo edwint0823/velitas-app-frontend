@@ -57,6 +57,7 @@ import { listCashInventory } from "@/services/cashMovements/cashMovement.service
 import ModalEditCashInventoryQuantity from "@/components/cashMovements/ModalEditCashInventoryQuantity.vue";
 import EmptyView from "@/components/general/EmptyView.vue";
 import { getAllBanksWithAmounts } from "@/services/bankEntities/bankEntity.service.js";
+import { breadCrumbsLabels } from "@/core/constants.js";
 
 const mainStore = useMainStore();
 const filters = ref({
@@ -101,9 +102,9 @@ const convertBankNameToFileName = (name) => {
 };
 onMounted(async () => {
   mainStore.setBreadcrumbs([
-    { label: "Flujo de caja" },
+    { label: breadCrumbsLabels.cashMovements.main },
     {
-      label: "Dinero físico disponible",
+      label: breadCrumbsLabels.cashMovements.cashAvailable,
       route: "cash_available",
     },
   ]);

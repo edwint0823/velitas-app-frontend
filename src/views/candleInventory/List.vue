@@ -58,6 +58,7 @@ import { useMainStore } from "@/store/main.store.js";
 import EmptyView from "@/components/general/EmptyView.vue";
 import { listCandleInventory } from "@/services/candlesInventory/candleInventory.service.js";
 import ModalCreateInventoryMovement from "@/components/candleInventory/ModalCreateInventoryMovement.vue";
+import { breadCrumbsLabels } from "@/core/constants.js";
 
 const mainStore = useMainStore();
 
@@ -99,7 +100,13 @@ const getSeverity = (status) => {
 };
 
 onMounted(async () => {
-  mainStore.setBreadcrumbs([{ label: "Inventario" }, { label: "Inv. velas", route: "list_candle_inventory" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.inventory.main },
+    {
+      label: breadCrumbsLabels.inventory.candleInventory,
+      route: "list_candle_inventory",
+    },
+  ]);
   await getCandleInventory();
 });
 </script>

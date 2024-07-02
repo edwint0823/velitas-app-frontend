@@ -114,7 +114,7 @@ import { listCandleTypes } from "@/services/candleType/candleType.service.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import { getCandleInventoryMovements } from "@/services/auditory/auditory.service.js";
 import EmptyView from "@/components/general/EmptyView.vue";
-import { paginateListCandleInventoryMovements } from "@/core/constants.js";
+import { breadCrumbsLabels, paginateListCandleInventoryMovements } from "@/core/constants.js";
 
 const mainStore = useMainStore();
 const dayjs = useDayJs();
@@ -200,9 +200,9 @@ const searchMovements = async () => {
 
 onMounted(async () => {
   mainStore.setBreadcrumbs([
-    { label: "Auditoria" },
+    { label: breadCrumbsLabels.auditory.main },
     {
-      label: "Mov. Inv. velas",
+      label: breadCrumbsLabels.auditory.candleInventoryMovements,
       route: "list_candle_inventory_movements",
     },
   ]);
