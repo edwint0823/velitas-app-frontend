@@ -335,6 +335,7 @@ export const breadCrumbsLabels = {
     configParams: "Parámetros",
     candleOptions: "Opciones de vela",
     createCandleOption: "Crear opción de vela",
+    editCandleOption: "Editar opción de vela",
   },
 };
 

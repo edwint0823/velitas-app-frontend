@@ -19,3 +19,20 @@ export const createCandleOption = async (formData) => {
     },
   });
 };
+
+export const saveInfoCandleOption = async (id, formData) => {
+  return await axios.patch(`${API_BACKEND_VELAS}/candle_options/update/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      auth: true,
+    },
+  });
+};
+
+export const findCandleOptionById = async (id) => {
+  return await axios.get(`${API_BACKEND_VELAS}/candle_options/find/${id}`, {
+    headers: {
+      auth: true,
+    },
+  });
+};

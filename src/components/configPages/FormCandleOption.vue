@@ -34,6 +34,7 @@
       <Dropdown
         v-model="candle_type_id"
         :options="candleTypeOptions"
+        :disabled="isEdit"
         input-id="candle_type_id"
         option-label="name"
         option-value="id"
@@ -58,7 +59,7 @@
         <small class="text-red-600" :class="{ hidden: !errors.is_vip_pack }">{{ errors.is_vip_pack }}</small>
       </div>
     </div>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2" v-if="showUploadInput">
       <label>Imagen:</label>
       <FileUpload
         name="file"
@@ -168,6 +169,18 @@
       </FileUpload>
       <small class="text-red-600" :class="{ hidden: !errors.imageFile }">{{ errors.imageFile }}</small>
     </div>
+    <div v-else class="flex flex-col content-center gap-3">
+      <label>Imagen:</label>
+      <img :src="imageFile" :alt="name" class="w-full" />
+      <Button
+        icon="pi pi-refresh"
+        rounded
+        raised
+        @click="changeToUploadNewImage"
+        severity="info"
+        label="Cargar nueva imagen"
+      />
+    </div>
     <div class="col-span-1 md:col-span-2">
       <span>Nombres: </span>
       <div class="mt-2 flex justify-between gap-2">
@@ -201,7 +214,11 @@
     </div>
   </div>
   <div class="flex justify-center pt-3 lg:pt-0">
-    <Button icon="pi pi-save" label="Guardar información" @click="submitFormInfo" />
+    <Button
+      icon="pi pi-save"
+      :label="isEdit ? 'Actualizar información' : 'Guardar información'"
+      @click="submitFormInfo"
+    />
   </div>
 </template>
 <script setup>
@@ -211,8 +228,11 @@ import { usePrimeVue } from "primevue/config";
 import { useForm } from "vee-validate";
 import { onMounted, ref } from "vue";
 import { listCandleTypes } from "@/services/candleType/candleType.service.js";
+import { useRoute } from "vue-router";
+import { findCandleOptionById } from "@/services/candleOptions/candleOptions.service.js";
 
 const $primevue = usePrimeVue();
+const route = useRoute();
 const props = defineProps({
   isEdit: {
     type: Boolean,
@@ -222,6 +242,7 @@ const props = defineProps({
 const emits = defineEmits(["submitForm"]);
 const fileImageUploadRef = ref();
 const candleTypeOptions = ref([]);
+const showUploadInput = ref(true);
 const nameToAdd = ref("");
 
 const schema = yup.object().shape({
@@ -269,6 +290,26 @@ const submitFormInfo = handleSubmit((values) => {
   emits("submitForm", values);
 });
 
+const getCandleInfoById = async () => {
+  await findCandleOptionById(route.params.id).then(({ data }) => {
+    name.value = data.name;
+    retail_price.value = data.retail_price;
+    bulk_price.value = data.bulk_price;
+    is_pack.value = data.is_pack;
+    visible.value = data.visible;
+    candle_type_id.value = data.candleTypeId;
+    is_vip_pack.value = data.is_vip_pack;
+    pack_names.value = data.pack_names.map(({ name }) => name);
+    imageFile.value = data.url_image;
+    showUploadInput.value = false;
+  });
+};
+
+const changeToUploadNewImage = () => {
+  imageFile.value = undefined;
+  showUploadInput.value = true;
+};
+
 const addNameToList = () => {
   if (nameToAdd.value === "") return;
 
@@ -285,7 +326,7 @@ const addNameToList = () => {
 };
 
 const removeCandleName = (index) => {
-  pack_names.value.splice(index, 0, 1);
+  pack_names.value.splice(index, 1);
 };
 
 const ondUpload = (event) => {
@@ -301,6 +342,7 @@ const onRemoveTemplatingFile = (fileData, removeFileCallback, index) => {
   removeFileCallback(index);
   imageFile.value = undefined;
 };
+
 const formatSize = (bytes) => {
   const k = 1024;
   const dm = 3;
@@ -321,7 +363,9 @@ onMounted(async () => {
     candleTypeOptions.value = data;
   });
 
-  if (!props.isEdit) {
+  if (props.isEdit) {
+    await getCandleInfoById();
+  } else {
     visible.value = true;
     is_pack.value = false;
     is_vip_pack.value = false;
