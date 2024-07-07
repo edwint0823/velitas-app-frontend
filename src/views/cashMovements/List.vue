@@ -161,7 +161,7 @@ import { helper } from "@/utils/helper.js";
 import EmptyView from "@/components/general/EmptyView.vue";
 import { paginateListMovements } from "@/services/cashMovements/cashMovement.service.js";
 import { useDayJs } from "@/utils/useDayJs.js";
-import { paginateListCashMovements } from "@/core/constants.js";
+import { breadCrumbsLabels, paginateListCashMovements } from "@/core/constants.js";
 import ModalCreateOutMovements from "@/components/cashMovements/ModalCreateOutMovements.vue";
 
 const dayjs = useDayJs();
@@ -262,7 +262,13 @@ const createOutMovement = () => {
   modalCreateOutMovementRef.value.openModalCreateOutMovement();
 };
 onMounted(async () => {
-  mainStore.setBreadcrumbs([{ label: "Flujo de caja" }, { label: "Transacciones", route: "list_cash_movements" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.cashMovements.main },
+    {
+      label: breadCrumbsLabels.cashMovements.transactions,
+      route: "list_cash_movements",
+    },
+  ]);
   await getBankEntitiesList().then(({ data }) => {
     bankEntityList.value = data;
   });

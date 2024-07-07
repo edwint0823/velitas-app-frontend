@@ -143,7 +143,7 @@ import ModalOrderDetail from "@/components/orders/ModalOrderDetail.vue";
 import { useMainStore } from "@/store/main.store.js";
 import { helper } from "@/utils/helper.js";
 import { downloadExcel, paginateOrderList } from "@/services/orders/order.service.js";
-import { paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
+import { breadCrumbsLabels, paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import ModalChangeOrderStatus from "@/components/orders/ModalChangeOrderStatus.vue";
 import ModalCreatePayment from "@/components/orders/ModalCreatePayment.vue";
@@ -258,7 +258,13 @@ const exportOrderToExcel = async (code) => {
   await downloadExcel(code);
 };
 onMounted(() => {
-  mainStore.setBreadcrumbs([{ label: "Pedidos" }, { label: "Lista de pedidos", route: "list_orders" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.order.main },
+    {
+      label: breadCrumbsLabels.order.listOrders,
+      route: "list_orders",
+    },
+  ]);
   searchOrders();
 });
 </script>

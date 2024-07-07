@@ -112,7 +112,7 @@ import { useMainStore } from "@/store/main.store.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import { computed, inject, onMounted, ref } from "vue";
 import { helper } from "@/utils/helper.js";
-import { paginateListBagInventoryMovements } from "@/core/constants.js";
+import { breadCrumbsLabels, paginateListBagInventoryMovements } from "@/core/constants.js";
 import { getBagInventoryMovements } from "@/services/auditory/auditory.service.js";
 import { listAllBags } from "@/services/bags/bags.service.js";
 
@@ -198,9 +198,9 @@ const searchMovements = async () => {
 
 onMounted(async () => {
   mainStore.setBreadcrumbs([
-    { label: "Auditoria" },
+    { label: breadCrumbsLabels.auditory.main },
     {
-      label: "Mov. Inv. bolsas",
+      label: breadCrumbsLabels.auditory.bagInventoryMovements,
       route: "list_bags_inventory_movements",
     },
   ]);

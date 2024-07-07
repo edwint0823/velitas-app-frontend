@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <span class="text-2xl font-bold md:text-3xl">Inventario de velas</span>
+    <span class="text-2xl font-bold md:text-3xl">Inventario de bolsas</span>
   </div>
   <Card class="mb-5 mt-4">
     <template #title>Filtros</template>
@@ -61,6 +61,7 @@ import { useMainStore } from "@/store/main.store.js";
 import { lisBagInventory } from "@/services/bagsInventory/bagInventory.service.js";
 import EmptyView from "@/components/general/EmptyView.vue";
 import ModalCreateBagInventoryMovement from "@/components/bagInventory/ModalCreateBagInventoryMovement.vue";
+import { breadCrumbsLabels } from "@/core/constants.js";
 
 const mainStore = useMainStore();
 
@@ -101,7 +102,13 @@ const openModalRegister = (bag) => {
 };
 
 onMounted(async () => {
-  mainStore.setBreadcrumbs([{ label: "Inventario" }, { label: "Inv. bolsas", route: "list_bag_inventory" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.inventory.main },
+    {
+      label: breadCrumbsLabels.inventory.bagInventory,
+      route: "list_bag_inventory",
+    },
+  ]);
   await getBagInventory();
 });
 </script>

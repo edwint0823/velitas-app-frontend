@@ -6,6 +6,7 @@ import bag_inventory_routes from "@/router/bag_inventory.router.js";
 import mainRoutes from "./main_routes.router.js";
 import cash_movements_routes from "@/router/cash_movements.router.js";
 import auditory_routes from "@/router/auditory.router.js";
+import config_routes from "@/router/config_routes.js";
 
 const routes = [
   ...order_routes,
@@ -13,6 +14,7 @@ const routes = [
   ...bag_inventory_routes,
   ...cash_movements_routes,
   ...auditory_routes,
+  ...config_routes,
   ...auth_routes,
   ...mainRoutes,
 ];
