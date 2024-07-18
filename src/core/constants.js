@@ -229,7 +229,7 @@ export const menuItems = [
               label: "Listar",
               icon: "pi pi-box",
               iconColor: "",
-              route: "list_orders",
+              route: "list_customers",
             },
             {
               label: "Crear",
@@ -329,6 +329,10 @@ export const breadCrumbsLabels = {
     bagInventoryMovements: "Mov. Inv. bolsas",
     candleInventoryMovements: "Mov. Inv. velas",
     orderStatusChangeLog: "Cambios estado de pedido",
+  },
+  customers: {
+    main: "Clientes",
+    listCustomers: "Lista de clientes",
   },
   configuration: {
     main: "Configuración",

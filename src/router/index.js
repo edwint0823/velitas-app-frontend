@@ -7,16 +7,18 @@ import mainRoutes from "./main_routes.router.js";
 import cash_movements_routes from "@/router/cash_movements.router.js";
 import auditory_routes from "@/router/auditory.router.js";
 import config_routes from "@/router/config_routes.js";
+import customer_routes from "@/router/customer.router.js";
 
 const routes = [
+  ...auth_routes,
+  ...mainRoutes,
   ...order_routes,
   ...candle_inventory_routes,
   ...bag_inventory_routes,
   ...cash_movements_routes,
   ...auditory_routes,
   ...config_routes,
-  ...auth_routes,
-  ...mainRoutes,
+  ...customer_routes,
 ];
 const router = createRouter({
   history: createWebHistory(),
