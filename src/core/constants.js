@@ -64,6 +64,16 @@ export const statusForBagInventoryMovement = {
   name: "En Proceso de Empaquetado",
   order: 7,
 };
+
+export const priceTypeOptionsList = [
+  {
+    name: "detal",
+  },
+  {
+    name: "mayorista",
+  },
+];
+
 export const baseStructureOrderDetailByCode = {
   customerName: "",
   totalPrice: 0,
@@ -439,6 +449,15 @@ export const updateOrderStatusMessages = {
   bagInventoryMovementText:
     "Al actualizar el estado se realizara una salida de inventario de bolsas, ¿Esta seguro de realizar esta acción ?",
   updateSuccessTitle: "Estado del pedido actualizado",
+};
+
+export const createAndUpdateCustomerMessages = {
+  validEmail: "El correo electrónico es invalido",
+  requiredEmail: "El correo electrónico es requerido",
+  requiredName: "El nombre del cliente es requerido",
+  requiredPhone: "El número telefónico es requerido ",
+  completePhone: "Ingrese el numero telefónico completo",
+  priceTypeRequired: "El tipo de precio para el cliente es requerido",
 };
 
 export const paginateListCashMovements = {

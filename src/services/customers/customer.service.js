@@ -13,3 +13,19 @@ export const listCustomers = async (pageSize, pageNumber) => {
     },
   });
 };
+
+export const updateCustomer = async (email, payload) => {
+  return await axios.patch(`${API_BACKEND_VELAS}/customer/update/${email}`, payload, {
+    headers: {
+      auth: true,
+    },
+  });
+};
+
+export const createCustomer = async (payload) => {
+  return await axios.post(`${API_BACKEND_VELAS}/customer/create`, payload, {
+    headers: {
+      auth: true,
+    },
+  });
+};

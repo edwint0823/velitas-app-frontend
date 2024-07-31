@@ -1,6 +1,7 @@
 <template>
-  <div class="mb-5 flex justify-center">
+  <div class="mb-5 flex justify-between">
     <span class="text-2xl font-bold md:text-3xl">Listado de clientes</span>
+    <Button icon="pi pi-plus" severity="success" v-tooltip="'Crear'" @click="createCustomer" />
   </div>
   <DataTable :value="customers">
     <template #empty>
@@ -33,6 +34,8 @@
       />
     </template>
   </DataTable>
+  <modalCustomer ref="modalEditCustomerRef" :isEdit="true" @operation-finished="getCustomersList" />
+  <modalCustomer ref="modalCreateCustomerRef" :isEdit="false" @operation-finished="getCustomersList" />
 </template>
 <script setup>
 import EmptyView from "@/components/general/EmptyView.vue";
@@ -40,6 +43,7 @@ import { breadCrumbsLabels } from "@/core/constants.js";
 import { onMounted, ref } from "vue";
 import { useMainStore } from "@/store/main.store.js";
 import { listCustomers } from "@/services/customers/customer.service.js";
+import modalCustomer from "@/components/customer/ModalCustomer.vue";
 
 const mainStore = useMainStore();
 
@@ -49,6 +53,8 @@ const paginator = ref({
   page_size: 10,
   total: 0,
 });
+const modalEditCustomerRef = ref();
+const modalCreateCustomerRef = ref();
 
 const getCustomersList = async () => {
   await listCustomers(paginator.value.page_size, paginator.value.page_number).then(({ data }) => {
@@ -64,7 +70,11 @@ const onPageChange = (event) => {
 };
 
 const editCustomer = (email) => {
-  console.log(email);
+  modalEditCustomerRef.value.openModalCustomer(email, true);
+};
+
+const createCustomer = () => {
+  modalCreateCustomerRef.value.openModalCustomer("", false);
 };
 
 onMounted(async () => {
