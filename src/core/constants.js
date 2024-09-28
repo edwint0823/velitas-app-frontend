@@ -64,6 +64,16 @@ export const statusForBagInventoryMovement = {
   name: "En Proceso de Empaquetado",
   order: 7,
 };
+
+export const priceTypeOptionsList = [
+  {
+    name: "detal",
+  },
+  {
+    name: "mayorista",
+  },
+];
+
 export const baseStructureOrderDetailByCode = {
   customerName: "",
   totalPrice: 0,
@@ -120,7 +130,7 @@ export const createOrEditDetailsOrderDialButtonItems = [
     icon: "/icons/pet.svg",
   },
 ];
-export const menuItems = [
+export const superUserMenuItems = [
   {
     label: "Dashboard",
     icon: "pi pi-home",
@@ -229,7 +239,7 @@ export const menuItems = [
               label: "Listar",
               icon: "pi pi-box",
               iconColor: "",
-              route: "list_orders",
+              route: "list_customers",
             },
             {
               label: "Crear",
@@ -303,6 +313,42 @@ export const menuItems = [
     ],
   },
 ];
+export const guestUserMenuItems = [
+  {
+    label: "Dashboard",
+    icon: "pi pi-home",
+    iconColor: "",
+    root: false,
+    route: "dashboard",
+  },
+  {
+    label: "Pedidos",
+    icon: "pi pi-truck",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Pedidos",
+          items: [
+            {
+              label: "Crear",
+              icon: "pi pi-plus",
+              iconColor: "",
+              route: "create_order",
+            },
+            {
+              label: "Buscar",
+              icon: "pi pi-search",
+              iconColor: "",
+              route: "search_order",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+];
 export const breadCrumbsLabels = {
   dashboard: {
     main: "dashboard",
@@ -329,6 +375,10 @@ export const breadCrumbsLabels = {
     bagInventoryMovements: "Mov. Inv. bolsas",
     candleInventoryMovements: "Mov. Inv. velas",
     orderStatusChangeLog: "Cambios estado de pedido",
+  },
+  customers: {
+    main: "Clientes",
+    listCustomers: "Lista de clientes",
   },
   configuration: {
     main: "Configuración",
@@ -435,6 +485,15 @@ export const updateOrderStatusMessages = {
   bagInventoryMovementText:
     "Al actualizar el estado se realizara una salida de inventario de bolsas, ¿Esta seguro de realizar esta acción ?",
   updateSuccessTitle: "Estado del pedido actualizado",
+};
+
+export const createAndUpdateCustomerMessages = {
+  validEmail: "El correo electrónico es invalido",
+  requiredEmail: "El correo electrónico es requerido",
+  requiredName: "El nombre del cliente es requerido",
+  requiredPhone: "El número telefónico es requerido ",
+  completePhone: "Ingrese el numero telefónico completo",
+  priceTypeRequired: "El tipo de precio para el cliente es requerido",
 };
 
 export const paginateListCashMovements = {

@@ -47,8 +47,8 @@
   </aside>
 </template>
 <script setup>
-import { computed, ref } from "vue";
-import { menuItems } from "@/core/constants.js";
+import { computed, onMounted, ref } from "vue";
+import { superUserMenuItems, guestUserMenuItems } from "@/core/constants.js";
 import { useAuthStore } from "@/store/auth/auth.store.js";
 import { useRouter } from "vue-router";
 
@@ -59,7 +59,13 @@ const isLoggedIn = computed(() => {
   return authStore.isLoggedIn;
 });
 
-const items = ref(menuItems);
+const items = ref(guestUserMenuItems);
+
+onMounted(() => {
+  if (authStore.user?.is_superuser) {
+    items.value = superUserMenuItems;
+  }
+});
 
 const logout = () => {
   authStore.logout();
