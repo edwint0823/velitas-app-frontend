@@ -21,7 +21,7 @@
           href="https://api.whatsapp.com/send/?phone=573155680091&text=Hola%20como%20estas&type=phone_number&app_absent=0"
           target="_blank"
           rel="noopener noreferrer"
-          v-tooltip="'Chatea con nosotros'"
+          v-tooltip="'Chatea con nosotros '"
           class="p-button floating-button rounded-full bg-green-500 p-3 font-bold drop-shadow-xl"
         >
           <i class="pi pi-whatsapp text-3xl text-white" />
