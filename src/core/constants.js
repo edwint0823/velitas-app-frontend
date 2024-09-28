@@ -130,7 +130,7 @@ export const createOrEditDetailsOrderDialButtonItems = [
     icon: "/icons/pet.svg",
   },
 ];
-export const menuItems = [
+export const superUserMenuItems = [
   {
     label: "Dashboard",
     icon: "pi pi-home",
@@ -306,6 +306,42 @@ export const menuItems = [
               icon: "pi pi-lightbulb",
               iconColor: "",
               route: "list_candle_options",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+];
+export const guestUserMenuItems = [
+  {
+    label: "Dashboard",
+    icon: "pi pi-home",
+    iconColor: "",
+    root: false,
+    route: "dashboard",
+  },
+  {
+    label: "Pedidos",
+    icon: "pi pi-truck",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Pedidos",
+          items: [
+            {
+              label: "Crear",
+              icon: "pi pi-plus",
+              iconColor: "",
+              route: "create_order",
+            },
+            {
+              label: "Buscar",
+              icon: "pi pi-search",
+              iconColor: "",
+              route: "search_order",
             },
           ],
         },
