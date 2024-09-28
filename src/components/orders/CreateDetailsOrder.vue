@@ -3,21 +3,23 @@
     <Card class="mb-5">
       <template #title>Información de envío</template>
       <template #content>
-        <div class="grid grid-cols-1 gap-x-16 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+        <div class="grid grid-cols-1 gap-x-16 gap-y-4 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
           <div class="flex flex-col gap-2">
             <label for="delivery_address">Dirección de envío: </label>
             <InputText id="delivery_address" v-model="deliveryAddress" type="text" class="w-full" />
           </div>
           <div class="flex flex-col gap-2">
-            <label for="additional_info">
-              <i
-                class="pi pi-info"
+            <div class="flex justify-between">
+              <label for="additional_info"> Información adicional: </label>
+              <div
+                class="px-3"
                 v-tooltip.top="
                   'Puede agregar información como el nombre la persona que recoge , numero de cédula para envío por interrapidisimo'
                 "
-              ></i>
-              Información adicional:
-            </label>
+              >
+                <i class="pi pi-info"></i>
+              </div>
+            </div>
             <InputText id="additional_info" v-model="additionalInfo" type="text" class="w-full" />
           </div>
         </div>
@@ -181,7 +183,7 @@ import { onMounted, ref, computed, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useOrdersCreateStore } from "@/store/order/orders_create.store.js";
 import { createCandleOrder } from "@/services/orders/order.service.js";
-import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
+import { getCandleListOptions } from "@/services/candleType/candleType.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import {
   createDetailOrderMessages,
@@ -262,7 +264,12 @@ const addNameToList = (index) => {
   if (nameToAdd.length > 0) {
     candles.value[index].nameList.push({
       idx: candles.value[index].nameList.length,
-      name: nameToAdd,
+      name: nameToAdd
+        .split(" ")
+        .map((p) => {
+          return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+        })
+        .join(" "),
       packAlone: false,
       deceased: false,
       pet: false,

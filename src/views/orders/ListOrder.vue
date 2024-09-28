@@ -108,6 +108,12 @@
                     severity="help"
                     @click="openChangeStatusModal(order)"
                   />
+                  <Button
+                    v-tooltip.top="'Exportar a excel'"
+                    icon="pi pi-file-excel"
+                    severity="secondary"
+                    @click="exportOrderToExcel(order.code)"
+                  />
                 </div>
               </div>
             </div>
@@ -136,8 +142,8 @@ import EmptyView from "@/components/general/EmptyView.vue";
 import ModalOrderDetail from "@/components/orders/ModalOrderDetail.vue";
 import { useMainStore } from "@/store/main.store.js";
 import { helper } from "@/utils/helper.js";
-import { paginateOrderList } from "@/services/orders/order.service.js";
-import { paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
+import { downloadExcel, paginateOrderList } from "@/services/orders/order.service.js";
+import { breadCrumbsLabels, paginatedListOrdersMessages, statusColorPalette } from "@/core/constants.js";
 import { useDayJs } from "@/utils/useDayJs.js";
 import ModalChangeOrderStatus from "@/components/orders/ModalChangeOrderStatus.vue";
 import ModalCreatePayment from "@/components/orders/ModalCreatePayment.vue";
@@ -185,9 +191,7 @@ const onPageChange = (event) => {
 };
 
 const searchOrders = async () => {
-  const payload = {
-    filters: {},
-  };
+  const payload = {};
   if (
     filters.value.delivery_date_begin !== null &&
     filters.value.delivery_date_end !== null &&
@@ -214,22 +218,22 @@ const searchOrders = async () => {
   }
 
   if (filters.value.orders_code.length) {
-    payload["filters"]["orders_code"] = filters.value.orders_code.join(",");
+    payload["orders_code"] = filters.value.orders_code.join(",");
   }
   if (filters.value.customer_name !== "") {
-    payload["filters"]["customer_name"] = filters.value.customer_name.toUpperCase();
+    payload["customer_name"] = filters.value.customer_name.toUpperCase();
   }
   if (filters.value.delivery_date_begin !== null) {
-    payload["filters"]["delivery_date_begin"] = dayjs(filters.value.delivery_date_begin).format("YYYY-MM-DD");
+    payload["delivery_date_begin"] = dayjs(filters.value.delivery_date_begin).format("YYYY-MM-DD");
   }
   if (filters.value.delivery_date_end !== null) {
-    payload["filters"]["delivery_date_end"] = dayjs(filters.value.delivery_date_end).format("YYYY-MM-DD");
+    payload["delivery_date_end"] = dayjs(filters.value.delivery_date_end).format("YYYY-MM-DD");
   }
   if (filters.value.created_at_begin !== null) {
-    payload["filters"]["created_at_begin"] = dayjs(filters.value.created_at_begin).format("YYYY-MM-DD");
+    payload["created_at_begin"] = dayjs(filters.value.created_at_begin).format("YYYY-MM-DD");
   }
   if (filters.value.created_at_end !== null) {
-    payload["filters"]["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
+    payload["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
   }
   await paginateOrderList(paginator.value.page_number, paginator.value.page_size, payload).then(({ data }) => {
     orders.value = data.orders;
@@ -250,8 +254,17 @@ const openAddPaymentModal = (code) => {
   orderPaymentModalRef.value.openPaymentModal(code);
 };
 
+const exportOrderToExcel = async (code) => {
+  await downloadExcel(code);
+};
 onMounted(() => {
-  mainStore.setBreadcrumbs([{ label: "Pedidos" }, { label: "Lista de pedidos", route: "list_orders" }]);
+  mainStore.setBreadcrumbs([
+    { label: breadCrumbsLabels.order.main },
+    {
+      label: breadCrumbsLabels.order.listOrders,
+      route: "list_orders",
+    },
+  ]);
   searchOrders();
 });
 </script>

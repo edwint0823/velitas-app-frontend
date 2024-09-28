@@ -1,7 +1,19 @@
 <template>
   <div v-show="showSearch">
-    <div class="flex justify-center">
-      <span class="text-3xl font-extrabold">Buscar pedido</span>
+    <div class="grid grid-cols-2 px-2 pb-4 pt-2 md:grid-cols-5 lg:px-0">
+      <div class="col-span-0 flex justify-center md:col-span-4">
+        <span class="text-xl font-bold md:text-2xl">Buscar pedido</span>
+      </div>
+      <div class="flex justify-end">
+        <Button
+          severity="help"
+          icon="pi pi-plus"
+          raised
+          v-tooltip="'Crear pedido'"
+          :label="isMobile ? null : 'Crear pedido'"
+          @click="$router.push({ name: 'create_order' })"
+        />
+      </div>
     </div>
     <div class="flex flex-col gap-2 pb-6 pt-8">
       <label class="text-lg font-semibold">Nro de orden: </label>
@@ -22,16 +34,21 @@
         class="max-[430px]:mr-3 max-[430px]:mt-3 sm:mr-5 sm:mt-5 lg:mr-0 lg:mt-0"
       />
     </div>
-    <ViewOrderByCode ref="viewOrderByCodeRef" />
+    <ViewOrderByCode ref="viewOrderByCodeRef" @order-updated="searchOrder" />
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { baseStructureOrderDetailByCode, breadCrumbsLabels } from "@/core/constants.js";
 import { useMainStore } from "@/store/main.store.js";
 import { useRoute, useRouter } from "vue-router";
 import { getOrderByCode } from "@/services/orders/order.service.js";
 import ViewOrderByCode from "@/components/orders/ViewOrderByCode.vue";
+import { helper } from "@/utils/helper.js";
+
+const isMobile = computed(() => {
+  return helper.isMobileDevice();
+});
 
 const mainStore = useMainStore();
 const route = useRoute();
@@ -62,7 +79,7 @@ onMounted(async () => {
     { label: breadCrumbsLabels.order.main },
     { label: breadCrumbsLabels.order.searchOrderByCode, route: "search_order" },
   ]);
-  if (route.params.code !== "") {
+  if (![undefined, ""].includes(route.params.code)) {
     code.value = route.params.code;
     await searchOrder();
   }

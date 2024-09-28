@@ -18,7 +18,7 @@ const props = defineProps({
   },
   imageClass: {
     type: String,
-    required: true,
+    required: false,
     default: "w-1/2 md:w-1/5",
   },
 });

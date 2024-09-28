@@ -54,6 +54,7 @@ export const warnTitleMessage = "Acción no permitida";
 export const defaultObservationValue = "Sin observaciones";
 export const statusNameValidToCancel = ["creado", "pendiente corel", "en corel"];
 export const statusPublicNameCancel = "Cancelado";
+export const statusIdCancel = 1;
 export const statusForCandleInventoryMovement = {
   name: "En Proceso de marcado",
   order: 5,
@@ -63,6 +64,16 @@ export const statusForBagInventoryMovement = {
   name: "En Proceso de Empaquetado",
   order: 7,
 };
+
+export const priceTypeOptionsList = [
+  {
+    name: "detal",
+  },
+  {
+    name: "mayorista",
+  },
+];
+
 export const baseStructureOrderDetailByCode = {
   customerName: "",
   totalPrice: 0,
@@ -119,7 +130,7 @@ export const createOrEditDetailsOrderDialButtonItems = [
     icon: "/icons/pet.svg",
   },
 ];
-export const menuItems = [
+export const superUserMenuItems = [
   {
     label: "Dashboard",
     icon: "pi pi-home",
@@ -128,8 +139,35 @@ export const menuItems = [
     route: "dashboard",
   },
   {
-    label: "Pedidos",
+    label: "Inventario",
     icon: "pi pi-box",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Inventario",
+          items: [
+            {
+              label: "Listado Velas",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "list_candle_inventory",
+            },
+            {
+              label: "Listado Bolsas",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "list_bag_inventory",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
+    label: "Pedidos",
+    icon: "pi pi-truck",
     iconColor: "",
     root: true,
     items: [
@@ -139,15 +177,48 @@ export const menuItems = [
           items: [
             {
               label: "Listar",
-              icon: "pi pi-box",
+              icon: "pi pi-list",
               iconColor: "",
               route: "list_orders",
             },
             {
               label: "Crear",
-              icon: "pi pi-box",
+              icon: "pi pi-plus",
               iconColor: "",
               route: "create_order",
+            },
+            {
+              label: "Buscar",
+              icon: "pi pi-search",
+              iconColor: "",
+              route: "search_order",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
+    label: "Flujo de caja",
+    icon: "pi pi-dollar",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Flujo de caja",
+          items: [
+            {
+              label: "Transacciones",
+              icon: "pi pi-arrow-right-arrow-left",
+              iconColor: "",
+              route: "list_cash_movements",
+            },
+            {
+              label: "Efectivo disponible",
+              icon: "pi pi-list",
+              iconColor: "",
+              route: "cash_available",
             },
           ],
         },
@@ -168,7 +239,7 @@ export const menuItems = [
               label: "Listar",
               icon: "pi pi-box",
               iconColor: "",
-              route: "list_orders",
+              route: "list_customers",
             },
             {
               label: "Crear",
@@ -182,26 +253,95 @@ export const menuItems = [
     ],
   },
   {
-    label: "Usuarios",
-    icon: "pi pi-box",
+    label: "Auditoria",
+    icon: "pi pi-eye",
     iconColor: "",
     root: true,
     items: [
       [
         {
-          label: "Usuarios",
+          label: "Auditoría",
           items: [
             {
-              label: "Listar",
-              icon: "pi pi-box",
+              label: "Mov. Inv. velas",
+              icon: "pi pi-warehouse",
               iconColor: "",
-              route: "list_orders",
+              route: "list_candle_inventory_movements",
             },
             {
+              label: "Mov. Inv. bolsas",
+              icon: "pi pi-warehouse",
+              iconColor: "",
+              route: "list_bags_inventory_movements",
+            },
+            {
+              label: "Cambios estado de pedido",
+              icon: "pi pi-receipt",
+              iconColor: "",
+              route: "list_order_change_status_logs",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+  {
+    label: "Configuración",
+    icon: "pi pi-cog",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Configuración",
+          items: [
+            {
+              label: "Parámetros",
+              icon: "pi pi-lightbulb",
+              iconColor: "",
+              route: "list_config_params",
+            },
+            {
+              label: "Opciones de vela",
+              icon: "pi pi-lightbulb",
+              iconColor: "",
+              route: "list_candle_options",
+            },
+          ],
+        },
+      ],
+    ],
+  },
+];
+export const guestUserMenuItems = [
+  {
+    label: "Dashboard",
+    icon: "pi pi-home",
+    iconColor: "",
+    root: false,
+    route: "dashboard",
+  },
+  {
+    label: "Pedidos",
+    icon: "pi pi-truck",
+    iconColor: "",
+    root: true,
+    items: [
+      [
+        {
+          label: "Pedidos",
+          items: [
+            {
               label: "Crear",
-              icon: "pi pi-box",
+              icon: "pi pi-plus",
               iconColor: "",
               route: "create_order",
+            },
+            {
+              label: "Buscar",
+              icon: "pi pi-search",
+              iconColor: "",
+              route: "search_order",
             },
           ],
         },
@@ -210,14 +350,42 @@ export const menuItems = [
   },
 ];
 export const breadCrumbsLabels = {
+  dashboard: {
+    main: "dashboard",
+  },
+  inventory: {
+    main: "Inventario",
+    candleInventory: "Inv. velas",
+    bagInventory: "Inv. bolsas",
+  },
   order: {
     main: "Pedidos",
+    listOrders: "Lista de pedidos",
     createOrder: "Crear Pedido",
     searchOrderByCode: "Ver pedido",
     editOrder: "Editar Pedido",
   },
-  dashboard: {
-    main: "dashboard",
+  cashMovements: {
+    main: "Flujo de caja",
+    cashAvailable: "Dinero físico disponible",
+    transactions: "Transacciones",
+  },
+  auditory: {
+    main: "Auditoría",
+    bagInventoryMovements: "Mov. Inv. bolsas",
+    candleInventoryMovements: "Mov. Inv. velas",
+    orderStatusChangeLog: "Cambios estado de pedido",
+  },
+  customers: {
+    main: "Clientes",
+    listCustomers: "Lista de clientes",
+  },
+  configuration: {
+    main: "Configuración",
+    configParams: "Parámetros",
+    candleOptions: "Opciones de vela",
+    createCandleOption: "Crear opción de vela",
+    editCandleOption: "Editar opción de vela",
   },
 };
 
@@ -227,6 +395,23 @@ export const createOrderValidation = {
   requiredName: "El nombre del cliente es requerido",
   requiredPhone: "El numero telefónico es requerido",
   completePhone: "Ingrese el numero telefónico completo",
+};
+
+export const editOrderValidation = {
+  requiredDeliveryAddress: "La dirección de envío es obligatoria",
+};
+
+export const createCandleOptionMessages = {
+  fileRequired: "La imagen de la opción es obligatoria",
+  nameRequired: "El nombre de la vela es requerido",
+  retailPriceRequired: "El precio detal es requerido",
+  retailPriceMinVal: "El valor mínimo permitido es de 0 ",
+  bulkPriceRequired: "El precio mayorista es requerido",
+  bulkPriceMinVal: "El valor mínimo permitido es de 0 ",
+  isPackRequired: "Marcar la opción de vela como paquete o no es requerido",
+  candleTypeIdRequired: "Se debe seleccionar un tipo de vela asociado a la opción",
+  isVipPackRequired: "Marcar la opción de vela como paquete VIP o no es requerido",
+  packNamesEmpty: "Si la opción es de tipo paquete se debe agregar al menos un nombre",
 };
 export const createDetailOrderMessages = {
   noCandleSelected: "Seleccione una vela para poder realizar la acción",
@@ -241,10 +426,6 @@ export const createDetailOrderMessages = {
   deliverAddressMaxLength: "La dirección de envío no puede tener mas de 255 caracteres",
 };
 
-export const editOrderValidation = {
-  requiredDeliveryAddress: "La dirección de envío es obligatoria",
-};
-
 export const editOrderMessages = {
   noCandleSelected: "Seleccione una vela para poder realizar la acción",
   candleIsVipPack: "El tipo de vela seleccionado no permite agregar nombres personalizados",
@@ -254,6 +435,26 @@ export const editOrderMessages = {
   candleNotSelected: "Algunas velas no tienen un tipo seleccionado",
 };
 
+export const createCandleInventoryMovementMessages = {
+  requiredQuantity: "La cantidad a registrar es requerida",
+  requiredMovementType: "El tipo de movimiento es requerido",
+  requiredObservation: "La observación del movimiento es requerida",
+};
+export const createBagInventoryMovementMessages = {
+  requiredQuantity: "La cantidad a registrar es requerida",
+  requiredMovementType: "El tipo de movimiento es requerido",
+  requiredObservation: "La observación del movimiento es requerida",
+};
+
+export const createOutMovementMessages = {
+  requiredBank: "El banco es requerido",
+  requiredAmount: "El valor del gasto es requerido",
+  requiredConcept: "El concepto del gasto es requerido",
+};
+
+export const editConfigParamMessages = {
+  requiredConfigParamValue: "El valor de parámetro es requerido",
+};
 export const loginMessages = {
   requiredUserName: "El nombre de usuario es requerido",
   minLengthPassword: "La contraseña debe ser de al menos 6 caracteres",
@@ -286,6 +487,38 @@ export const updateOrderStatusMessages = {
   updateSuccessTitle: "Estado del pedido actualizado",
 };
 
+export const createAndUpdateCustomerMessages = {
+  validEmail: "El correo electrónico es invalido",
+  requiredEmail: "El correo electrónico es requerido",
+  requiredName: "El nombre del cliente es requerido",
+  requiredPhone: "El número telefónico es requerido ",
+  completePhone: "Ingrese el numero telefónico completo",
+  priceTypeRequired: "El tipo de precio para el cliente es requerido",
+};
+
+export const paginateListCashMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListCandleInventoryMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListBagInventoryMovements = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const paginateListOrderStatusChangeLogs = {
+  validateFiltersTittle: "Verifique los filtros a aplicar",
+  createdAtFilterError: "La fecha final de creación no puede ser antes de la fecha inicial",
+};
+
+export const updateCashInventoryQuantityMessages = {
+  requiredQuantity: "La cantidad es requerida",
+};
 export const errorMessages = {
   validationFieldsError: "Error de validación de campos",
   notAuthorizedError: "No Autorizado",

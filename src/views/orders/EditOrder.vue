@@ -206,7 +206,7 @@ import { useRoute, useRouter } from "vue-router";
 import { editOrderByCode, updateOrderAndDetails } from "@/services/orders/order.service.js";
 import * as yup from "yup";
 import { useForm } from "vee-validate";
-import { getCandleListOptions } from "@/services/candleOptions/candleOptions.service.js";
+import { getCandleListOptions } from "@/services/candleType/candleType.service.js";
 import ButtonsDial from "@/components/general/ButtonsDial.vue";
 import { useToast } from "primevue/usetoast";
 
@@ -317,7 +317,12 @@ const addNameToList = (index) => {
   if (nameToAdd.length > 0) {
     order.value.details[index].nameList.push({
       idx: order.value.details[index].nameList.length,
-      name: nameToAdd,
+      name: nameToAdd
+        .split(" ")
+        .map((p) => {
+          return p.charAt(0).toUpperCase() + p.slice(1).toLowerCase();
+        })
+        .join(" "),
       packAlone: false,
       deceased: false,
       pet: false,
@@ -473,7 +478,7 @@ const updateOrder = handleSubmit(async (values) => {
         }),
         price: detail.price,
         quantity: detail.quantity,
-        observation: detail.quantity,
+        observation: detail.observation,
       };
     }),
   };
