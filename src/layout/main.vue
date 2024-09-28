@@ -7,6 +7,17 @@
       <div class="shadow-blur rounded-2xl bg-white/80 p-0 lg:p-3 xl:p-5 2xl:p-5">
         <router-view />
       </div>
+      <div>
+        <a
+          href="https://api.whatsapp.com/send/?phone=573143039143&text=Hola%20Deseo%20mas%20información%20de%20velitas&type=phone_number&app_absent=0"
+          target="_blank"
+          rel="noopener noreferrer"
+          v-tooltip="'Chatea con nosotros '"
+          class="p-button floating-button rounded-full bg-green-500 p-3 font-bold drop-shadow-xl"
+        >
+          <i class="pi pi-whatsapp text-3xl text-white" />
+        </a>
+      </div>
     </main>
   </div>
   <div v-else class="common-layout bg-gradient-to-b from-green-400/80 to-sky-300/80">
@@ -18,7 +29,7 @@
       </div>
       <div>
         <a
-          href="https://api.whatsapp.com/send/?phone=573155680091&text=Hola%20como%20estas&type=phone_number&app_absent=0"
+          href="https://api.whatsapp.com/send/?phone=573143039143&text=Hola%20Deseo%20mas%20información%20de%20velitas&type=phone_number&app_absent=0"
           target="_blank"
           rel="noopener noreferrer"
           v-tooltip="'Chatea con nosotros '"
