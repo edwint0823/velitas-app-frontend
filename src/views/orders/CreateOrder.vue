@@ -57,6 +57,27 @@
             <small class="text-red-600" :class="{ hidden: !errors.customer_tel }">{{ errors.customer_tel }}</small>
           </div>
         </div>
+        <div v-show="showClientExtraInfo && customerOrders.length" class="mt-4">
+          <Accordion :activeIndex="1">
+            <AccordionTab header="Pedidos anteriores">
+              <div class="grid grid-cols-4 gap-2 md:grid-cols-6 lg:grid-cols-12">
+                <Chip
+                  v-for="order in customerOrders"
+                  :key="order.code"
+                  class="cursor-pointer rounded-lg"
+                  @click="openNewTapOrder(order.code)"
+                >
+                  <template #default>
+                    <div class="flex flex-col gap-1 p-2">
+                      <span class="text-sm font-bold">{{ order.code }}</span>
+                      <span class="text-xs font-light">{{ order.created_at }}</span>
+                    </div>
+                  </template>
+                </Chip>
+              </div>
+            </AccordionTab>
+          </Accordion>
+        </div>
         <div class="mt-3 flex justify-end">
           <Button type="button" label="Guardar" @click="saveClientData" v-show="showSubmitButton" />
         </div>
@@ -77,6 +98,7 @@ import { getDataClientByEmail } from "@/services/customers/customer.service.js";
 import CreateDetailsOrder from "@/components/orders/CreateDetailsOrder.vue";
 import { breadCrumbsLabels, createOrderValidation } from "@/core/constants.js";
 import { helper } from "@/utils/helper.js";
+import router from "@/router/index.js";
 
 const isMobile = computed(() => {
   return helper.isMobileDevice();
@@ -86,6 +108,7 @@ const mainStore = useMainStore();
 const ordersCreateStore = useOrdersCreateStore();
 
 const createDetailsOrderRef = ref();
+const customerOrders = ref([]);
 
 const schema = yup.object({
   customer_email: yup
@@ -136,6 +159,7 @@ const searchClient = async () => {
           customer_tel.value = clientData.tel;
           priceType.value = clientData.priceType;
           showSubmitButton.value = false;
+          customerOrders.value = data.orders;
           saveClientData();
         } else {
           priceType.value = "detal";
@@ -156,9 +180,15 @@ const searchClient = async () => {
       tel: "",
       priceType: "",
     });
+    customerOrders.value = [];
     resetForm();
     createDetailsOrderRef.value.clearList();
   }
+};
+
+const openNewTapOrder = (code) => {
+  const url = router.resolve({ name: "search_order", params: { code } }).href;
+  window.open(url, "_blank");
 };
 
 onMounted(() => {

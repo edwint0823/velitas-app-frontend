@@ -3,14 +3,14 @@ export default {
     header: ({ props }) => ({
       class: [
         // Sizing
-        "pt-6 pb-0",
-        "mt-6",
+        // "pt-6 pb-0",
+        // "mt-6",
 
         // Shape
         "border-x-0 border-b-0",
 
         // Color
-        "border border-surface-200 dark:border-surface-700",
+        // "border border-surface-200 dark:border-surface-700 ",
 
         // State
         { "select-none pointer-events-none cursor-default opacity-60": props?.disabled },
@@ -18,6 +18,9 @@ export default {
     }),
     headerAction: ({ context }) => ({
       class: [
+        // Sizing
+        "px-4",
+        "py-2",
         //Font
         "font-semibold",
         "leading-7",
@@ -30,7 +33,7 @@ export default {
         "rounded-md",
 
         // Color
-        "bg-transparent",
+        "bg-transparent dark:bg-surface-900",
         "text-surface-900 dark:text-surface-0",
 
         // States
