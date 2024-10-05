@@ -60,7 +60,7 @@
         <div v-show="showClientExtraInfo && customerOrders.length" class="mt-4">
           <Accordion :activeIndex="1">
             <AccordionTab header="Pedidos anteriores">
-              <div class="grid grid-cols-4 gap-2 md:grid-cols-6 lg:grid-cols-12">
+              <div class="grid grid-cols-3 gap-2 md:grid-cols-6 lg:grid-cols-12">
                 <Chip
                   v-for="order in customerOrders"
                   :key="order.code"
