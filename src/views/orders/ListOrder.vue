@@ -185,6 +185,7 @@ const clearFilters = () => {
   searchOrders();
 };
 const onPageChange = (event) => {
+  console.log(event);
   paginator.value.page_size = parseInt(event.rows);
   paginator.value.page_number = parseInt(event.first) + 1;
   searchOrders();
