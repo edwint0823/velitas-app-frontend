@@ -185,7 +185,6 @@ const clearFilters = () => {
   searchOrders();
 };
 const onPageChange = (event) => {
-  console.log(event);
   paginator.value.page_size = parseInt(event.rows);
   paginator.value.page_number =
     parseInt(event.first) === 0
@@ -241,7 +240,6 @@ const searchOrders = async () => {
   if (filters.value.created_at_end !== null) {
     payload["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
   }
-  console.log(paginator.value, typeof paginator.value.page_number, typeof paginator.value.page_size, payload);
   await paginateOrderList(paginator.value.page_number, paginator.value.page_size, payload).then(({ data }) => {
     orders.value = data.orders;
     paginator.value.total = data.total;
