@@ -123,7 +123,7 @@
               v-model="paginator.page_number"
               :rows="paginator.page_size"
               :totalRecords="paginator.total"
-              :rowsPerPageOptions="[10, 20, 30]"
+              :rowsPerPageOptions="[1, 10, 20, 30]"
               @page="onPageChange"
               class="rounded-lg"
             />
@@ -185,8 +185,8 @@ const clearFilters = () => {
   searchOrders();
 };
 const onPageChange = (event) => {
-  paginator.value.page_size = event.rows;
-  paginator.value.page_number = event.first + 1;
+  paginator.value.page_size = parseInt(event.rows);
+  paginator.value.page_number = parseInt(event.first) + 1;
   searchOrders();
 };
 
