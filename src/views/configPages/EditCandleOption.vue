@@ -28,6 +28,7 @@ const updateCandleOption = async (values) => {
   formData.append("is_pack", values.is_pack);
   formData.append("candle_type_id", values.candle_type_id);
   formData.append("is_vip_pack", values.is_vip_pack);
+  formData.append("is_visible", values.visible);
   formData.append("pack_names", values.pack_names.join(","));
   await saveInfoCandleOption(route.params.id, formData).then(({ data }) => {
     swal({
