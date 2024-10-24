@@ -44,7 +44,7 @@ body {
     margin: 0;
     /*display: flex;*/
     /*flex-direction: row;*/
-    place-items: center;
+    /*place-items: center;*/
     min-height: 100%;
     overflow-x: hidden;
     overflow-y: auto;

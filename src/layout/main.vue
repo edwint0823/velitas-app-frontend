@@ -20,9 +20,9 @@
       </div>
     </main>
   </div>
-  <div v-else class="common-layout bg-gradient-to-b from-green-400/80 to-sky-300/80">
+  <div v-else class="common-layout min-w-screen bg-gradient-to-b from-green-400/80 to-sky-300/80">
     <DesktopMenu />
-    <main class="flex-grow p-4" style="min-height: 100vh">
+    <main class="w-full flex-grow p-4" style="min-height: 100vh">
       <Breadcrumbs />
       <div class="shadow-blur rounded-2xl bg-white/80 p-5">
         <router-view />

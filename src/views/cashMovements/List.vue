@@ -244,7 +244,12 @@ const searchMovements = async () => {
 
 const onPageChange = (event) => {
   paginator.value.page_size = event.rows;
-  paginator.value.page_number = event.first + 1;
+  paginator.value.page_number =
+    parseInt(event.first) === 0
+      ? parseInt(event.first) + 1
+      : event.pageCount
+        ? event.pageCount
+        : parseInt(event.first) + 1;
   searchMovements();
 };
 
