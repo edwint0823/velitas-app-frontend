@@ -66,12 +66,7 @@ const getCustomersList = async () => {
 const onPageChange = (event) => {
   console.log(event);
   paginator.value.page_size = event.rows;
-  paginator.value.page_number =
-    parseInt(event.first) === 0
-      ? parseInt(event.first) + 1
-      : event.pageCount
-        ? event.pageCount
-        : parseInt(event.first) + 1;
+  paginator.value.page_number = parseInt(event.page) + 1;
   getCustomersList();
 };
 
