@@ -28,7 +28,7 @@
         v-model="paginator.page_number"
         :rows="paginator.page_size"
         :totalRecords="paginator.total"
-        :rowsPerPageOptions="[10, 20, 30]"
+        :rowsPerPageOptions="[1, 2, 10, 20, 30]"
         @page="onPageChange"
         class="rounded-lg"
       />
@@ -64,6 +64,7 @@ const getCustomersList = async () => {
 };
 
 const onPageChange = (event) => {
+  console.log(event);
   paginator.value.page_size = event.rows;
   paginator.value.page_number =
     parseInt(event.first) === 0
