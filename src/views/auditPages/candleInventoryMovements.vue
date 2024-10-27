@@ -142,7 +142,6 @@ const paginator = ref({
 });
 
 const onPageChange = (event) => {
-  console.log(event);
   paginator.value.page_size = event.rows;
   paginator.value.page_number = parseInt(event.page) + 1;
   searchMovements();
