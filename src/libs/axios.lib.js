@@ -28,13 +28,14 @@ axios.interceptors.response.use(
       if (error.response.data.hasOwnProperty("detail")) {
         errorList = error.response.data.detail;
       } else {
-        for (let key in error.response.data) {
-          if (Array.isArray(error.response.data[key])) {
-            errorList.push(`${key}: ${error.response.data[key].join(", ")}`);
-          } else {
-            errorList.push(`${key}: ${error.response.data[key]}`);
-          }
-        }
+        errorList.push(error.response.data.message);
+        // for (let key in error.response.data) {
+        //   if (Array.isArray(error.response.data[key])) {
+        //     errorList.push(`${key}: ${error.response.data[key].join(", ")}`);
+        //   } else {
+        //     errorList.push(`${key}: ${error.response.data[key]}`);
+        //   }
+        // }
       }
       Swal.fire({
         icon: "warning",
