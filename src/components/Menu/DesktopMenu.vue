@@ -3,8 +3,8 @@
     <MegaMenu :model="isLoggedIn ? items : []" orientation="vertical">
       <template #start>
         <div class="mb-5 mt-4 flex flex-col items-center">
-          <img src="/images/logos/logo_app.png" alt="" class="w-1/2" />
-          <span class="font-semibold text-surface-900 dark:text-white">VELITAS APP</span>
+          <img src="/images/logos/logo_app.png" alt="" class="w-1/3" />
+          <span class="font-semibold text-surface-900 dark:text-white">CERA AMIGOS</span>
         </div>
       </template>
       <template #item="{ item }">

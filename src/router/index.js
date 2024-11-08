@@ -27,7 +27,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   const { title } = to.meta;
-  const str = `${title || "INICIO"} | VELITAS APP`;
+  const str = `${title || "INICIO"} | CERA AMIGOS`;
   document.title = str.toUpperCase();
 });
 export default router;

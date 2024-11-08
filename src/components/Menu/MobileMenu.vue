@@ -3,12 +3,12 @@
     <MegaMenu :model="isLoggedIn ? items : []" class="w-full">
       <template #start v-if="!isLoggedIn">
         <div class="flex items-center justify-start">
-          <img src="/images/logos/logo_app.png" alt="" class="w-10" />
-          <span class="font-semibold text-surface-900 dark:text-white">VELITAS APP</span>
+          <img src="/images/logos/logo_app.png" alt="" class="mr-2 w-5" />
+          <span class="font-semibold text-surface-900 dark:text-white">CERA AMIGOS</span>
         </div>
       </template>
       <template #menubuttonicon>
-        <img src="/images/logos/logo_app.png" alt="" class="w-full" />
+        <img src="/images/logos/logo_app.png" alt="" class="w-1/2" />
       </template>
       <template #item="{ item }">
         <a

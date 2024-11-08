@@ -1,13 +1,13 @@
 <template>
   <Loading />
-  <div class="min-w-screen flex min-h-screen items-center justify-center">
-    <div class="min-w-screen grid min-h-screen grid-cols-1 lg:grid-cols-2">
+  <div class="max-w-screen max-h-screen">
+    <div class="min-w-screen grid-cols-1n grid min-h-screen lg:grid-cols-2">
       <div class="flex justify-center bg-sky-400 p-16" v-if="!isMobile">
         <img src="../../assets/login-panel.svg" alt="" class="w-full" />
       </div>
       <div class="justify-top flex flex-col items-center min-[280px]:mx-2 sm:mx-16">
-        <img src="/images/logos/logo_app.png" alt="" class="w-1/3 pb-3 pt-7" />
-        <span class="pb-6 text-2xl font-extrabold text-surface-900"> VELITAS APP </span>
+        <img src="/images/logos/logo_app.png" alt="" class="pt-5" />
+        <span class="pb-6 text-2xl font-extrabold text-surface-900"> CERA AMIGOS </span>
         <div class="relative mx-auto w-full p-3">
           <LoginForm v-if="showLoginForm" @show-register-form="showLoginForm = !showLoginForm" />
           <RegisterForm v-else @show-login-form="showLoginForm = !showLoginForm" />

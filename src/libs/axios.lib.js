@@ -2,7 +2,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { errorMessages, HttpStatus } from "@/core/constants.js";
 import { useAuthStore } from "@/store/auth/auth.store.js";
-import { useRouter } from "vue-router";
 import Cookies from "js-cookie";
 
 const authStore = useAuthStore();
