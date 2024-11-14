@@ -1,6 +1,21 @@
 <template>
   <Card class="mb-5">
-    <template #title>Información general</template>
+    <template #title>
+      <div class="grid grid-cols-2 pt-2 md:grid-cols-5">
+        <div class="col-span-0 flex justify-center md:col-span-4">
+          <span class="text-lg font-bold md:text-2xl">Información general</span>
+        </div>
+        <div class="flex justify-end">
+          <Button
+            severity="help"
+            icon="pi pi-arrow-left"
+            raised
+            v-tooltip.top="'Ir a listado'"
+            @click="$router.push({ name: 'list_orders' })"
+          />
+        </div>
+      </div>
+    </template>
     <template #content>
       <div class="grid grid-cols-1 gap-x-16 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
         <div class="flex flex-col gap-2">
