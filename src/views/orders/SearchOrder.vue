@@ -38,8 +38,8 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { baseStructureOrderDetailByCode, breadCrumbsLabels } from "@/core/constants.js";
+import { computed, inject, onMounted, ref } from "vue";
+import { baseStructureOrderDetailByCode, breadCrumbsLabels, serchOrderMessages } from "@/core/constants.js";
 import { useMainStore } from "@/store/main.store.js";
 import { useRoute, useRouter } from "vue-router";
 import { getOrderByCode } from "@/services/orders/order.service.js";
@@ -53,6 +53,7 @@ const isMobile = computed(() => {
 const mainStore = useMainStore();
 const route = useRoute();
 const router = useRouter();
+const swal = inject("$swal");
 
 const viewOrderByCodeRef = ref();
 
@@ -60,6 +61,14 @@ const code = ref("");
 const showSearch = ref(true);
 
 const searchOrder = async () => {
+  if (["", null, undefined].includes(code.value)) {
+    swal({
+      title: serchOrderMessages.searchTitleError,
+      icon: "warning",
+      text: serchOrderMessages.orderCodeRequired,
+    });
+    return;
+  }
   await getOrderByCode(code.value).then(({ data }) => {
     viewOrderByCodeRef.value.loadOrder(data, code.value);
     showSearch.value = false;

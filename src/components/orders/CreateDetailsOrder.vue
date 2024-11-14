@@ -129,6 +129,10 @@
                       </div>
                     </div>
                   </div>
+                  <span class="mb-2 mt-2 text-sm font-bold text-surface-500 dark:text-white/70">
+                    Nota: si alguno de los nombres es para un difunto, una mascota o debe empacarse solo puede usar las
+                    opciones dentro de cada nombre (botón de 3 puntos)
+                  </span>
                   <span class="mb-2 mt-4 text-sm text-surface-500 dark:text-white/70"> Observaciones </span>
                   <Textarea v-model="candle.observation" autoResize rows="1" cols="30" />
                 </div>

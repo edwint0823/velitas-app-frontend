@@ -435,6 +435,11 @@ export const editOrderMessages = {
   candleNotSelected: "Algunas velas no tienen un tipo seleccionado",
 };
 
+export const serchOrderMessages = {
+  searchTitleError: "No es posible buscar el pedido",
+  orderCodeRequired: "El número de pedido es requerido",
+};
+
 export const createCandleInventoryMovementMessages = {
   requiredQuantity: "La cantidad a registrar es requerida",
   requiredMovementType: "El tipo de movimiento es requerido",

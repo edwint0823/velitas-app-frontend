@@ -8,7 +8,7 @@
       <div class="grid grid-cols-1 gap-y-3 md:grid-cols-3">
         <div class="col-span-1 flex flex-col md:col-span-2">
           <label for="candle_name">Nombre:</label>
-          <InputText id="candle_name" v-model="filters.name" placeholder="Nombre de una vela" class="max-w-[300px]" />
+          <InputText id="candle_name" v-model="filters.name" placeholder="Nombre de una moneda" class="max-w-[300px]" />
         </div>
         <div class="flex items-end justify-center gap-4 md:justify-end">
           <Button label="Buscar" icon="pi pi-search" @click="getCashInventory" severity="info" />
