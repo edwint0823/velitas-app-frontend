@@ -8,7 +8,10 @@ const authStore = useAuthStore();
 axios.interceptors.request.use((request) => {
   document.getElementById("loading-component").classList.remove("hidden");
   if (request.headers.auth) {
-    request.headers.authorization = `Baerer ${Cookies.get("token")}`;
+    const token = Cookies.get("token") ?? null;
+    if (token !== null) {
+      request.headers.authorization = `Baerer ${token}`;
+    }
     delete request.headers.auth;
   }
   return request;
