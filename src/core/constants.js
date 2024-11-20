@@ -546,7 +546,8 @@ export const statusColorPalette = {
   "En Proceso de marcado": "text-teal-600",
   Marcado: "text-cyan-600",
   "En Proceso de Empaquetado": "text-sky-600",
-  Entregado: "text-green-600",
+  Entregado: "text-red-600",
   Cancelado: "text-red-600",
+  "Pendiente por entregar": "text-indigo-500",
   Empacado: "text-emerald-600",
 };

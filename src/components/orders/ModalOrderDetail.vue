@@ -10,6 +10,7 @@
     <div class="mb-5 grid grid-cols-1 gap-1 md:grid-cols-3">
       <span><strong>Cliente:</strong> {{ orderInfo.customerName }}</span>
       <span><strong>Tipo de cliente:</strong> {{ orderInfo.customerPriceType }}</span>
+      <span><strong>Número telefónico:</strong> {{ orderInfo.customerPhoneNumber }}</span>
       <span><strong>Fecha de entrega:</strong> {{ orderInfo.deliveryDate }}</span>
       <span><strong>Dirección de entrega:</strong> {{ orderInfo.deliveryAddress }}</span>
       <span><strong>Precio de entrega:</strong> {{ $h.formatCurrency(orderInfo.deliveryPrice, 0) }}</span>
@@ -121,6 +122,7 @@ const orderInfo = ref({
   createdAt: "",
   customerName: "",
   customerPriceType: "",
+  customerPhoneNumber: "",
   statusName: "",
   statusPublicName: "",
   deliveryPrice: 0,
@@ -139,6 +141,7 @@ const openModal = async (order) => {
     orderInfo.value.createdAt = data.createdAt;
     orderInfo.value.customerName = data.customerName;
     orderInfo.value.customerPriceType = data.customerPriceType;
+    orderInfo.value.customerPhoneNumber = data.customerPhoneNumber;
     orderInfo.value.statusName = data.statusName;
     orderInfo.value.statusPublicName = data.statusPublicName;
     orderInfo.value.deliveryPrice = data.deliveryPrice;

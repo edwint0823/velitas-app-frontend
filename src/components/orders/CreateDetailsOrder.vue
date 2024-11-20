@@ -28,7 +28,7 @@
     <div class="sticky top-0 z-10 rounded-2xl bg-white/90">
       <div class="flex justify-between px-6 py-4">
         <span class="text-900 text-xl font-bold">Listado de velas</span>
-        <Button icon="pi pi-plus" rounded raised @click="addCandle" v-tooltip="'Agregar vela'" />
+        <Button icon="pi pi-plus" rounded raised @click="addCandle" v-tooltip="'Agregar vela'" label="Agregar" />
       </div>
     </div>
 
