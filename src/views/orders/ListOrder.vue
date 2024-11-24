@@ -1,14 +1,28 @@
 <template>
   <div class="p-3 sm:p-0">
     <h2 class="mb-3 text-xl font-bold">Filtros</h2>
-    <div class="grid grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-      <div class="md:col-span-0 col-span-1 flex flex-col lg:col-span-2">
+    <div class="grid grid-cols-1 gap-x-7 gap-y-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div class="md:col-span-0 col-span-1 flex flex-col xl:col-span-2">
         <label class="mb-2 font-semibold">Nro Pedido(s)</label>
         <Chips v-model="filters.orders_code" separator="," placeholder="Nro pedido(s) separado por coma (,)" />
       </div>
       <div class="flex flex-col">
         <label class="mb-2 font-semibold">Nombre del cliente</label>
         <InputText v-model="filters.customer_name" type="text" placeholder="Nombre del cliente" />
+      </div>
+      <div class="flex flex-col">
+        <label class="mb-2 font-semibold">Estado del pedido</label>
+        <Dropdown
+          v-model="filters.status"
+          :options="statusList"
+          optionLabel="name"
+          option-value="id"
+          placeholder="selecciona un estado"
+        />
+      </div>
+      <div class="flex flex-col">
+        <label class="mb-2 font-semibold">Nombre vela</label>
+        <InputText v-model="filters.candle_name" type="text" placeholder="Nombre del cliente" />
       </div>
       <div class="flex flex-col">
         <label class="mb-2 font-semibold">Fecha de entrega inicial</label>
@@ -59,7 +73,7 @@
         />
       </div>
       <div class="col-span-1 flex items-end justify-center gap-4 sm:col-span-2 md:justify-end lg:col-span-1">
-        <Button label="Buscar" icon="pi pi-search" @click="searchOrders" severity="info" />
+        <Button label="Buscar" icon="pi pi-search" @click="paginateOrders" severity="info" />
         <Button label="Limpiar filtros" icon="pi pi-eraser" outlined severity="secondary" @click="clearFilters" />
       </div>
     </div>
@@ -147,6 +161,7 @@ import { breadCrumbsLabels, paginatedListOrdersMessages, statusColorPalette } fr
 import { useDayJs } from "@/utils/useDayJs.js";
 import ModalChangeOrderStatus from "@/components/orders/ModalChangeOrderStatus.vue";
 import ModalCreatePayment from "@/components/orders/ModalCreatePayment.vue";
+import { statusListByOrder } from "@/services/status/status.service.js";
 
 const dayjs = useDayJs();
 const swal = inject("$swal");
@@ -159,7 +174,7 @@ const isMobile = computed(() => {
 const orderDetailRef = ref(null);
 const orderStatusModalRef = ref(null);
 const orderPaymentModalRef = ref(null);
-
+const statusList = ref([]);
 const filters = ref({
   orders_code: [],
   customer_name: "",
@@ -167,6 +182,8 @@ const filters = ref({
   delivery_date_end: null,
   created_at_begin: null,
   created_at_end: null,
+  status: null,
+  candle_name: null,
 });
 const paginator = ref({
   page_number: 1,
@@ -175,6 +192,10 @@ const paginator = ref({
 });
 const orders = ref([]);
 
+const paginateOrders = async () => {
+  paginator.value.page_number = 1;
+  await searchOrders();
+};
 const clearFilters = () => {
   filters.value.orders_code = [];
   filters.value.customer_name = "";
@@ -182,6 +203,9 @@ const clearFilters = () => {
   filters.value.delivery_date_end = null;
   filters.value.created_at_begin = null;
   filters.value.created_at_end = null;
+  filters.value.status = null;
+  filters.value.candle_name = null;
+  paginator.value.page_number = 1;
   searchOrders();
 };
 const onPageChange = (event) => {
@@ -235,6 +259,12 @@ const searchOrders = async () => {
   if (filters.value.created_at_end !== null) {
     payload["created_at_end"] = dayjs(filters.value.created_at_end).format("YYYY-MM-DD");
   }
+  if (filters.value.status !== null) {
+    payload["status"] = filters.value.status;
+  }
+  if (filters.value.candle_name !== null) {
+    payload["candle_name"] = filters.value.candle_name;
+  }
   await paginateOrderList(paginator.value.page_number, paginator.value.page_size, payload).then(({ data }) => {
     orders.value = data.orders;
     paginator.value.total = data.total;
@@ -242,6 +272,12 @@ const searchOrders = async () => {
 };
 const statusColor = (statusName) => {
   return statusColorPalette[statusName];
+};
+
+const getStatusList = async () => {
+  await statusListByOrder(0).then(({ data }) => {
+    statusList.value = data;
+  });
 };
 
 const openDetailModal = (order) => {
@@ -266,5 +302,6 @@ onMounted(() => {
     },
   ]);
   searchOrders();
+  getStatusList();
 });
 </script>

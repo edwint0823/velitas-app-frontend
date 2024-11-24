@@ -6,11 +6,12 @@ export const getDataClientByEmail = async (email) => {
   return await axios.get(`${API_BACKEND_VELAS}/customer/find/${email}`);
 };
 
-export const listCustomers = async (pageSize, pageNumber) => {
+export const listCustomers = async (pageSize, pageNumber, payload) => {
   return await axios.get(`${API_BACKEND_VELAS}/customer/list/${pageSize}/${pageNumber}`, {
     headers: {
       auth: true,
     },
+    params: { ...payload },
   });
 };
 

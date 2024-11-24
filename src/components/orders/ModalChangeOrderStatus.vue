@@ -14,7 +14,7 @@
         :options="statusOptionList"
         optionLabel="name"
         option-value="id"
-        placeholder="selecciona un stado"
+        placeholder="selecciona un estado"
       />
     </div>
     <div class="flex justify-center">
