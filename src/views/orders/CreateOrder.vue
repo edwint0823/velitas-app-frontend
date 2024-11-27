@@ -33,20 +33,20 @@
             </div>
             <small class="text-red-600" :class="{ hidden: !errors.customer_email }">{{ errors.customer_email }}</small>
           </div>
-          <!--          <div class="col-span-full pt-2">-->
-          <!--            <span class="text-xl font-extrabold">-->
-          <!--              Estimados clientes,-->
-          <!--              <br />-->
-          <!--              <br />-->
-          <!--              Debido a una alta demanda en nuestros pedidos, no podremos aceptar nuevos pedidos hasta nuevo aviso.-->
-          <!--              <br />-->
-          <!--              <br />-->
-          <!--              Lamentamos los inconvenientes que esto pueda causarles.-->
-          <!--              <br />-->
-          <!--              <br />-->
-          <!--              Atentamente, El equipo de Cera Amigos-->
-          <!--            </span>-->
-          <!--          </div>-->
+          <div class="col-span-full pt-2">
+            <span class="text-xl font-extrabold">
+              Estimados clientes,
+              <br />
+              <br />
+              Debido a una alta demanda en nuestros pedidos, no podremos aceptar nuevos pedidos hasta nuevo aviso.
+              <br />
+              <br />
+              Lamentamos los inconvenientes que esto pueda causarles.
+              <br />
+              <br />
+              Atentamente, El equipo de Cera Amigos
+            </span>
+          </div>
           <div class="flex flex-col gap-2" v-if="showClientExtraInfo">
             <label for="customer_name">Nombre:</label>
             <InputText
@@ -169,42 +169,42 @@ const saveClientData = handleSubmit((values) => {
 });
 
 const searchClient = async () => {
-  // if (isLoggedIn.value) {
-  if (!disableFields.value) {
-    if (!errors.value.hasOwnProperty("customer_email") && ![undefined, "", null].includes(customer_email.value)) {
-      await getDataClientByEmail(customer_email.value).then(({ data }) => {
-        const { found, ...clientData } = data;
-        if (found) {
-          customer_name.value = clientData.name;
-          customer_tel.value = clientData.tel;
-          priceType.value = clientData.priceType;
-          showSubmitButton.value = false;
-          customerOrders.value = data.orders;
-          saveClientData();
-        } else {
-          priceType.value = "detal";
-          showSubmitButton.value = true;
-        }
-        showClientExtraInfo.value = true;
+  if (isLoggedIn.value) {
+    if (!disableFields.value) {
+      if (!errors.value.hasOwnProperty("customer_email") && ![undefined, "", null].includes(customer_email.value)) {
+        await getDataClientByEmail(customer_email.value).then(({ data }) => {
+          const { found, ...clientData } = data;
+          if (found) {
+            customer_name.value = clientData.name;
+            customer_tel.value = clientData.tel;
+            priceType.value = clientData.priceType;
+            showSubmitButton.value = false;
+            customerOrders.value = data.orders;
+            saveClientData();
+          } else {
+            priceType.value = "detal";
+            showSubmitButton.value = true;
+          }
+          showClientExtraInfo.value = true;
+        });
+      }
+    } else {
+      //
+      disableFields.value = false;
+      showClientExtraInfo.value = false;
+      showSubmitButton.value = false;
+      showTableProducts.value = false;
+      ordersCreateStore.setCustomerInfo({
+        email: "",
+        name: "",
+        tel: "",
+        priceType: "",
       });
+      customerOrders.value = [];
+      resetForm();
+      createDetailsOrderRef.value.clearList();
     }
-  } else {
-    //
-    disableFields.value = false;
-    showClientExtraInfo.value = false;
-    showSubmitButton.value = false;
-    showTableProducts.value = false;
-    ordersCreateStore.setCustomerInfo({
-      email: "",
-      name: "",
-      tel: "",
-      priceType: "",
-    });
-    customerOrders.value = [];
-    resetForm();
-    createDetailsOrderRef.value.clearList();
   }
-  // }
 };
 
 const openNewTapOrder = (code) => {
